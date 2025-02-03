@@ -8,7 +8,6 @@ import RoomCard from "../../components/room/roomCard/RoomCard";
 import { Carousel } from "antd";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle, IoMdHeart } from "react-icons/io";
 import { getRandomRating } from "../../utils/common";
-import { TfiHeadphoneAlt } from "react-icons/tfi";
 
 function Home() {
   const [activeTab, setActiveTab] = useState("all");
@@ -352,9 +351,7 @@ function Home() {
 
       </div>
 
-      <div className="fixed bottom-10 right-5 w-12 h-12 bg-blue-300 flex items-center justify-center rounded-full shadow-lg hover:bg-blue-400 hover:scale-110 transition cursor-pointer">
-        <TfiHeadphoneAlt className="text-white text-xl" />
-      </div>
+     
 
     </div>
   );

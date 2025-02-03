@@ -33,7 +33,7 @@ function Header() {
   ];
 
   return (
-    <header className="header-home-page">
+    <header className="header-home-page border-b border-gray-200">
       <div className="container">
         <nav className="bg-white py-4 flex justify-between items-center">
           <img src={logo} alt="SMART Logo" className="logo cursor-pointer" onClick={() => navigate("/")} />
