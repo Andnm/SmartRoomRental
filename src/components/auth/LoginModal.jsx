@@ -119,7 +119,7 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
           <hr className="flex-grow border-gray-300" />
         </div>
 
-        <ThirdServicesLogin />
+        <ThirdServicesLogin triggerCancel={triggerCancel}/>
       </div>
     </div>
   );
