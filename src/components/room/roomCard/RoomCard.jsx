@@ -4,7 +4,7 @@ import { getCategoryLabel } from '../../../utils/common';
 import { boardingCategories } from '../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 
-const RoomCard = ({ room }) => {
+const RoomCard = ({ room, is_hot }) => {
     const navigate = useNavigate();
 
     const handleNavigation = () => {
@@ -23,10 +23,11 @@ const RoomCard = ({ room }) => {
                         alt={room.title}
                         className="h-40 w-full object-cover rounded-t-lg"
                     />
-
-                    <span className="absolute top-3 bg-red-600 text-white text-xs px-6 py-1 rounded-r-full font-bold">
+                    {is_hot ? <span className="absolute top-3 bg-orange-600 text-white text-xs px-6 py-1 rounded-r-full font-semibold">
+                        HOT
+                    </span> : <span className="absolute top-3 bg-red-600 text-white text-xs px-6 py-1 rounded-r-full font-semibold">
                         VIP
-                    </span>
+                    </span>}
 
                 </div>
                 <div className="py-2">
@@ -34,7 +35,7 @@ const RoomCard = ({ room }) => {
                         {room.title}
                     </h2>
 
-                    <p className="text-sm mt-2 text-gray-400">Từ: <span className='font-bold text-orange-500'>{room.price.toLocaleString()} VND</span></p>
+                    <p className="text-sm mt-2 text-gray-400">Từ: <span className='font-semibold text-orange-500'>{room.price.toLocaleString()} VND</span></p>
 
                     <div className="flex gap-2 text-xs text-gray-700 mt-3">
                         <div className="bg-gray-100 px-2 py-1 rounded-xs font-bold">{getCategoryLabel(room.category)}</div>

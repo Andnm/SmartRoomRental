@@ -1,3 +1,74 @@
+import dorn_1 from "../assets/images/dorn_1.png";
+import dorn_2 from "../assets/images/dorn_2.png";
+import dorn_3 from "../assets/images/dorn_3.png";
+import dorn_4 from "../assets/images/dorn_4.png";
+import dorn_5 from "../assets/images/dorn_5.png";
+import hochiminh from "../assets/images/hochiminh.png";
+import hanoi from "../assets/images/hanoi.png";
+import danang from "../assets/images/danang.png";
+import thuathienhue from "../assets/images/thuathienhue.png";
+import cantho from "../assets/images/cantho.png";
+import khanhhoa from "../assets/images/khanhhoa.png";
+import connect_network from "../assets/images/connect_network.png";
+import raiseup from "../assets/images/raiseup.png";
+import advertisement from "../assets/images/advertisement.png";
+import news_1 from "../assets/images/news_1.png";
+import news_2 from "../assets/images/news_2.png";
+import news_3 from "../assets/images/news_3.png";
+import news_4 from "../assets/images/news_4.png";
+
+
+export const hot_news = [
+  {title: "Khám phá hệ thống đăng tin và quản lý trọ hiệu quả dành cho chủ trọ", img_link: news_1}, 
+  {title: "Thực hư về hệ thống tìm trọ toàn quốc HOT NHẤT hiện nay!", img_link: news_2},
+  {title: "Giao diện nâng cấp - Trải nghiệm nâng tầm", img_link: news_3},
+  {title: "Thủ tục đăng ký tạm trú tạm vắng cho người ở trọ mới nhất 2024", img_link: news_4}
+]
+
+export const quantity_provinces_dorn = [
+  { province: "Hồ Chí Minh", quantity: 8422 },
+  { province: "Hà Nội", quantity: 1756 },
+  { province: "Thừa Thiên Huế", quantity: 967 },
+  { province: "Đà Nẵng", quantity: 875 },
+  { province: "Cần Thơ", quantity: 137 },
+  { province: "Bình Dương", quantity: 92 },
+  { province: "Long An", quantity: 25 },
+  { province: "Đồng Nai", quantity: 18 },
+  { province: "Bà Rịa - Vũng Tàu", quantity: 12 },
+  { province: "Khánh Hòa", quantity: 9 },
+  { province: "Quảng Nam", quantity: 8 },
+  { province: "Bắc Ninh", quantity: 7 },
+  { province: "Tiền Giang", quantity: 5 },
+  { province: "Hải Phòng", quantity: 5 },
+  { province: "Hải Dương", quantity: 3 },
+  { province: "Tây Ninh", quantity: 3 },
+  { province: "Kon Tum", quantity: 3 },
+  { province: "Kiên Giang", quantity: 3 },
+  { province: "Thái Nguyên", quantity: 3 },
+  { province: "Lâm Đồng", quantity: 3 },
+];
+
+export const introduction = [
+  { title: "Mạng lưới nhà trọ cho thuê mới nhất", img_link: connect_network },
+  {
+    title: "Gia tăng 5.000 người thuê mới thực sự mới mỗi tháng",
+    img_link: raiseup,
+  },
+  {
+    title: "Quảng cáo nhà của bạn với chúng tôi và cảm nhận ngay hiệu quả",
+    img_link: advertisement,
+  },
+];
+
+export const provinces_outstanding = [
+  { name: "Hồ Chí Minh", img_link: hochiminh },
+  { name: "Hà Nội", img_link: hanoi },
+  { name: "Đà Nẵng", img_link: danang },
+  { name: "Thừa Thiên Huế", img_link: thuathienhue },
+  { name: "Cần Thơ", img_link: cantho },
+  { name: "Khánh Hòa", img_link: khanhhoa },
+];
+
 export const rooms_sample = [
   {
     id: 1,
@@ -126,7 +197,7 @@ export const rooms_sample = [
     id: 4,
     title:
       "Studio full nội thất số 12/4/6C Nguyễn Cảnh Dị, Phường 4, Quận Tân Bình",
-    type: "looking_for_roomates",
+    type: "looking_for_roommates",
     price: 6500000,
     category: "Apartment",
     area: 75,
@@ -411,15 +482,86 @@ export const rooms_sample = [
   },
 ];
 
+export const rooms_carousel = [
+  {
+    id: 1,
+    title:
+      "Nhà trọ số 166 đường Cao Thắng, Phường 11, Quận 10, Thành Phố Hồ Chí Minh",
+    type: "post_room",
+    price: 3000000,
+    category: "Self-managed boarding house",
+    area: 75,
+    address: "166 đường Cao Thắng, Phường 11, Quận 10, Thành Phố Hồ Chí Minh",
+    img_links: [dorn_1],
+    status: "active",
+  },
+  {
+    id: 2,
+    title:
+      "Nhà trọ số 329 Phạm Văn Chí, Phường 3, Quận 6, Thành Phố Hồ Chí Minh",
+    type: "post_room",
+    price: 5100000,
+    category: "Self-managed boarding house",
+    area: 75,
+    address: "329 Phạm Văn Chí, Phường 3, Quận 6, Thành Phố Hồ Chí Minh",
+    img_links: [dorn_2],
+    status: "active",
+  },
+  {
+    id: 3,
+    title:
+      "Căn hộ số 373/10 Phạm Ngũ Lão, Phường Phạm Ngũ Lão, Thành Phố Hồ Chí Minh",
+    type: "post_room",
+    price: 11000000,
+    category: "Self-managed boarding house",
+    area: 75,
+    address: "373/10 Phạm Ngũ Lão, Phường Phạm Ngũ Lão, Thành Phố Hồ Chí Minh",
+    img_links: [dorn_3],
+    status: "active",
+  },
+  {
+    id: 4,
+    title:
+      "Nhà trọ số 94 Phó Cơ Điều, Phường 4, Quận 11, Thành Phố Hồ Chí Minh",
+    type: "post_room",
+    price: 4700000,
+    category: "Self-managed boarding house",
+    area: 75,
+    address: "94 Phó Cơ Điều, Phường 4, Quận 11, Thành Phố Hồ Chí Minh",
+    img_links: [dorn_4],
+    status: "active",
+  },
+  {
+    id: 4,
+    title:
+      "Ký túc nữ 382/10 Điện Biên Phủ, Phường 11, Quận 10, Thành Phố Hồ Chí Minh",
+    type: "post_room",
+    price: 1800000,
+    category: "Self-managed boarding house",
+    area: 75,
+    address: "382/10 Điện Biên Phủ, Phường 11, Quận 10, Thành Phố Hồ Chí Minh",
+    img_links: [dorn_5],
+    status: "active",
+  },
+];
+
 export const housingCategoryTranslation = {
   "Self-managed boarding house": "Nhà trọ tự quản",
   "Managed boarding house": "Nhà trọ có quản lý",
-  "Dormitory": "Ký túc xá",
-  "Apartment": "Căn hộ",
-  "Homestay": "Homestay",
+  Dormitory: "Ký túc xá",
+  Apartment: "Căn hộ",
+  Homestay: "Homestay",
   "Full-house": "Nhà nguyên căn",
 };
 
-export const boardingCategories = ["Self-managed boarding house", "Managed boarding house", "Dormitory"];
-export const apartmentFullHouseCategories = ["Apartment", "Homestay", "Full-house"];
+export const boardingCategories = [
+  "Self-managed boarding house",
+  "Managed boarding house",
+  "Dormitory",
+];
 
+export const apartmentFullHouseCategories = [
+  "Apartment",
+  "Homestay",
+  "Full-house",
+];

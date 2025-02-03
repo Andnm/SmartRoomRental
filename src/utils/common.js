@@ -43,3 +43,5 @@ export const translateHousingType = (type) => {
 export const getCategoryLabel = (category) => {
   return boardingCategories.includes(category) ? "Phòng trọ" : "Nhà nguyên căn, chung cư";
 };
+
+export const getRandomRating = () => (Math.random() * (5.0 - 4.0) + 4.0).toFixed(1);
