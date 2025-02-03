@@ -12,7 +12,10 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleLogin = async () => {
     try {
@@ -24,7 +27,10 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
         if (getCurrentUserThunk.rejected.match(getCurrentUserAction)) {
           toast.error(response.payload || response.error.message);
         } else {
-          setFormData({});
+          setFormData({
+            email: "",
+            password: ""
+          });
           triggerCancel();
         }
       }
@@ -51,7 +57,7 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
               placeholder="Email"
               type="text"
               style={{ borderColor: "#E4E4E7" }}
-              value={formData.email}
+              value={formData.email || ""}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
@@ -64,7 +70,7 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
               placeholder="Mật khẩu"
               type={showPassword ? "text" : "password"}
               style={{ borderColor: "#E4E4E7" }}
-              value={formData.password}
+              value={formData.password || ""}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
@@ -80,9 +86,8 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
 
           <div className="mb-2 mt-10">
             <button
-              className={`cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900 disabled:bg-gray-400 ${
-                user?.loading ? "disabled:cursor-wait" : ""
-              }`}
+              className={`cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900 disabled:bg-gray-400 ${user?.loading ? "disabled:cursor-wait" : ""
+                }`}
               disabled={user?.loading}
               type="submit"
               onClick={(e) => {

@@ -16,13 +16,20 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
   const user = useSelector(userSelector);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const handleRegister = async () => {
     if (formData.password !== formData.confirmPassword) {
       toast.warning("Nhập lại mật khẩu sai");
       return;
     }
+
     const data = {
       email: formData.email,
       password: formData.password,
@@ -39,6 +46,13 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
         if (getCurrentUserThunk.rejected.match(getCurrentUserAction)) {
           toast.error(action.payload || action.error.message);
         } else {
+          setFormData({
+            name: "",
+            phone: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          });
           triggerCancel();
         }
       }
@@ -65,9 +79,8 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
               placeholder="Họ và tên"
               type="text"
               style={{ borderColor: "#E4E4E7" }}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
           </div>
 
@@ -77,9 +90,8 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
               placeholder="Số điện thoại"
               type="text"
               style={{ borderColor: "#E4E4E7" }}
-              onChange={(e) =>
-                setFormData({ ...formData, phone: e.target.value })
-              }
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             />
           </div>
 
@@ -89,9 +101,8 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
               placeholder="Email"
               type="text"
               style={{ borderColor: "#E4E4E7" }}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
           </div>
 
@@ -101,9 +112,8 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
               placeholder="Mật khẩu"
               type={showPassword ? "text" : "password"}
               style={{ borderColor: "#E4E4E7" }}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
             <button
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
@@ -120,6 +130,7 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
               placeholder="Xác nhận mật khẩu"
               type={showConfirmPassword ? "text" : "password"}
               style={{ borderColor: "#E4E4E7" }}
+              value={formData.confirmPassword}
               onChange={(e) =>
                 setFormData({ ...formData, confirmPassword: e.target.value })
               }
@@ -140,9 +151,8 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
                 e.preventDefault();
                 handleRegister();
               }}
-              className={`cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900 disabled:bg-gray-400 ${
-                user?.loading ? "disabled:cursor-wait" : ""
-              } `}
+              className={`cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900 disabled:bg-gray-400 ${user?.loading ? "disabled:cursor-wait" : ""
+                } `}
               disabled={user?.loading}
             >
               <Spin spinning={user?.loading} />
