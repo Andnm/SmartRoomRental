@@ -4,6 +4,11 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import NotFound from "../pages/notFound/NotFound";
 import AuthLayout from "../components/layout/AuthLayout/AuthLayout";
 import Signin from "../pages/signin/Signin";
+import BoardingList from "../pages/boarding/BoardingList";
+import BoardingDetail from "../pages/boarding/BoardingDetail";
+import ApartmentFullhouseList from "../pages/apartmentFullHouse/ApartmentFullhouseList";
+import ApartmentFullHouseDetail from "../pages/apartmentFullHouse/ApartmentFullHouseDetail";
+
 
 const Router = () => {
   return (
@@ -17,8 +22,11 @@ const Router = () => {
 
       <Route element={<AuthLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/boarding" element={<BoardingList />} />
+        <Route path="/boarding/:id" element={<BoardingDetail />} />
+        <Route path="/apartment-fullhouse" element={<ApartmentFullhouseList />} />
+        <Route path="/apartment-fullhouse/:id" element={<ApartmentFullHouseDetail />} />
       </Route>
       <Route path="/*" element={<NotFound />} />
     </Routes>

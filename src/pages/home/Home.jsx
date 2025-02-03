@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import "./styles.scss";
 import banner_img from "../../assets/images/banner.png";
 import { FaDollarSign, FaFilter } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
+import { rooms_sample } from "../../utils/constants";
+import RoomCard from "../../components/room/roomCard/RoomCard";
 
 function Home() {
   const [activeTab, setActiveTab] = useState("all");
-
+  const filteredRooms = rooms_sample.filter(
+    (room) => room.type === "post_room" && room.status === "active"
+  );
+  const displayedRooms = filteredRooms.slice(0, 8);
 
   return (
     <div className="home-page light-gray-background relative">
@@ -104,8 +108,34 @@ function Home() {
 
       {/* main content */}
       <div className="mt-18">
-        <div className="container h-50">asd</div>
+        {/* list rooms vip */}
+        <div className="container">
+          <div className="px-10 py-6 bg-white">
+            <h2 className="text-2xl font-bold text-blue-800 mb-6 uppercase">
+              lựa chọn chỗ ở vip
+            </h2>
+
+            <div className="flex flex-wrap gap-4 justify-between ">
+              {displayedRooms.map((room, index) => (
+                <RoomCard key={index} room={room} />
+              ))}
+            </div>
+
+            {filteredRooms.length > 8 && (
+              <button
+                className="cursor-pointer mt-4 px-6 py-3 border-2 border-blue-800 text-blue-800 font-bold rounded-md hover:bg-blue-100 flex items-center"
+                onClick={() => { }}
+              >
+                Xem tất cả <span className="ml-2">→</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        
       </div>
+
+
     </div>
   );
 }

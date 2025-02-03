@@ -26,10 +26,10 @@ function Header() {
 
 
   const menuItems = [
-    { name: "Phòng trọ", to: "#" },
-    { name: "Nhà nguyên căn, chung cư", to: "#" },
-    { name: "Tìm bạn ở ghép", to: "#" },
-    { name: "Blog", to: "#" },
+    { name: "Phòng trọ", to: "/boarding" },
+    { name: "Nhà nguyên căn, chung cư", to: "/apartment-fullhouse" },
+    { name: "Tìm bạn ở ghép", to: "/looking-for-teammates" },
+    { name: "Blog", to: "/blogs" },
   ];
 
   return (
@@ -43,10 +43,9 @@ function Header() {
               <NavLink
                 key={index}
                 to={item.to}
-                // className={({ isActive }) =>
-                //   `menu-item font-semibold hover:underline ${isActive ? "text-blue-600 underline" : "text-black"}`
-                // }
-                className="menu-item font-semibold hover:underline text-black"
+                className={({ isActive }) =>
+                  `menu-item font-semibold hover:underline ${isActive ? "text-blue-800 underline" : "text-black"}`
+                }
               >
                 {item.name}
               </NavLink>
