@@ -2,110 +2,179 @@ import React, { useState } from "react";
 import "./auth.styles.scss";
 import ThirdServicesLogin from "./ThirdServicesLogin";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+import { toast } from "react-toastify";
+import {
+  getCurrentUserThunk,
+  registerThunk,
+} from "../../redux/actions/userThunk";
+import { useDispatch, useSelector } from "react-redux";
+import { userSelector } from "../../redux/selectors/selector";
+import { Spin } from "antd";
 
-const RegisterModal = ({ setIsLoginModal }) => {
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
+  const dispatch = useDispatch();
+  const user = useSelector(userSelector);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({});
 
-    return (
+  const handleRegister = async () => {
+    if (formData.password !== formData.confirmPassword) {
+      toast.warning("Nhập lại mật khẩu sai");
+      return;
+    }
+    const data = {
+      email: formData.email,
+      password: formData.password,
+      fullname: formData.name,
+      phone_number: formData.phone,
+    };
 
-        <div className="flex items-center justify-center">
-            <div className="px-6 w-full">
-                <div className="flex justify-end">
-                    <button className="text-gray-500 hover:text-gray-700">
-                        <i className="fas fa-times">
-                        </i>
-                    </button>
-                </div>
-                <h2 className="text-center text-2xl font-bold text-blue-800 mb-6">
-                    ĐĂNG KÝ TÀI KHOẢN
-                </h2>
-                <form>
-                    <div className="mb-4">
-                        <input
-                            className="w-full px-4 py-4 border focus:outline-none focus:ring-2 focus:ring-blue-600"
-                            placeholder="Họ và tên"
-                            type="text"
-                            style={{ borderColor: "#E4E4E7" }}
-                        />
-                    </div>
+    try {
+      const action = await dispatch(registerThunk(data));
+      if (registerThunk.rejected.match(action)) {
+        toast.error(action.payload || action.error.message);
+      } else {
+        const getCurrentUserAction = await dispatch(getCurrentUserThunk());
+        if (getCurrentUserThunk.rejected.match(getCurrentUserAction)) {
+          toast.error(action.payload || action.error.message);
+        } else {
+          triggerCancel();
+        }
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
 
-                    <div className="mb-4">
-                        <input className="w-full px-4 py-4 border focus:outline-none focus:ring-2 focus:ring-blue-600"
-                            placeholder="Số điện thoại"
-                            type="text"
-                            style={{ borderColor: "#E4E4E7" }}
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <input className="w-full px-4 py-4 border focus:outline-none focus:ring-2 focus:ring-blue-600"
-                            placeholder="Email"
-                            type="text"
-                            style={{ borderColor: "#E4E4E7" }}
-                        />
-                    </div>
-
-                    <div className="mb-4 relative">
-                        <input className="w-full px-4 py-4 border focus:outline-none focus:ring-2 focus:ring-blue-600"
-                            placeholder="Mật khẩu"
-                            type={showPassword ? "text" : "password"}
-                            style={{ borderColor: "#E4E4E7" }}
-                        />
-                        <button
-                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                        >
-                            {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
-                        </button>
-                    </div>
-
-                    <div className="mb-4 relative">
-                        <input className="w-full px-4 py-4 border focus:outline-none focus:ring-2 focus:ring-blue-600"
-                            placeholder="Xác nhận mật khẩu"
-                            type={showConfirmPassword ? "text" : "password"}
-                            style={{ borderColor: "#E4E4E7" }}
-                        />
-                        <button
-                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
-                            type="button"
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        >
-                            {showConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}
-                        </button>
-                    </div>
-
-                    <div className="mb-2 mt-10">
-                        <button className="cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900" type="submit">
-                            Đăng ký
-                        </button>
-                    </div>
-
-                    <div className="text-center mb-4 flex justify-center">
-                        <p>Đã có tài khoản? </p>
-
-                        <button className="cursor-pointer hover:underline font-semibold ml-2"
-                            onClick={() => setIsLoginModal(true)}
-                            style={{ color: "#618BC9" }}>
-                            Đăng nhập
-                        </button>
-                    </div>
-                </form>
-
-                <div className="flex items-center justify-center mb-6">
-                    <hr className="flex-grow border-gray-300" />
-                    <div className="px-2 text-gray-500 " style={{ color: "#A0A1A4" }}>
-                        Tiếp tục với
-                    </div>
-                    <hr className="flex-grow border-gray-300" />
-                </div>
-
-                <ThirdServicesLogin />
-
-            </div>
+  return (
+    <div className="flex items-center justify-center">
+      <div className="px-6 w-full">
+        <div className="flex justify-end">
+          <button className="text-gray-500 hover:text-gray-700">
+            <i className="fas fa-times"></i>
+          </button>
         </div>
-    );
+        <h2 className="text-center text-2xl font-bold text-blue-800 mb-6">
+          ĐĂNG KÝ TÀI KHOẢN
+        </h2>
+        <form>
+          <div className="mb-4">
+            <input
+              className="w-full px-4 py-4 border focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="Họ và tên"
+              type="text"
+              style={{ borderColor: "#E4E4E7" }}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="mb-4">
+            <input
+              className="w-full px-4 py-4 border focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="Số điện thoại"
+              type="text"
+              style={{ borderColor: "#E4E4E7" }}
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="mb-4">
+            <input
+              className="w-full px-4 py-4 border focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="Email"
+              type="text"
+              style={{ borderColor: "#E4E4E7" }}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="mb-4 relative">
+            <input
+              className="w-full px-4 py-4 border focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="Mật khẩu"
+              type={showPassword ? "text" : "password"}
+              style={{ borderColor: "#E4E4E7" }}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+            />
+            <button
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+            </button>
+          </div>
+
+          <div className="mb-4 relative">
+            <input
+              className="w-full px-4 py-4 border focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="Xác nhận mật khẩu"
+              type={showConfirmPassword ? "text" : "password"}
+              style={{ borderColor: "#E4E4E7" }}
+              onChange={(e) =>
+                setFormData({ ...formData, confirmPassword: e.target.value })
+              }
+            />
+            <button
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+            </button>
+          </div>
+
+          <div className="mb-2 mt-10">
+            <button
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                handleRegister();
+              }}
+              className={`cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900 disabled:bg-gray-400 ${
+                user?.loading ? "disabled:cursor-wait" : ""
+              } `}
+              disabled={user?.loading}
+            >
+              <Spin spinning={user?.loading} />
+              Đăng ký
+            </button>
+          </div>
+
+          <div className="text-center mb-4 flex justify-center">
+            <p>Đã có tài khoản? </p>
+
+            <button
+              className="cursor-pointer hover:underline font-semibold ml-2"
+              onClick={() => setIsLoginModal(true)}
+              style={{ color: "#618BC9" }}
+            >
+              Đăng nhập
+            </button>
+          </div>
+        </form>
+
+        <div className="flex items-center justify-center mb-6">
+          <hr className="flex-grow border-gray-300" />
+          <div className="px-2 text-gray-500 " style={{ color: "#A0A1A4" }}>
+            Tiếp tục với
+          </div>
+          <hr className="flex-grow border-gray-300" />
+        </div>
+
+        <ThirdServicesLogin />
+      </div>
+    </div>
+  );
 };
 
 export default RegisterModal;

@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk } from "../actions/userThunk";
+import {
+  getCurrentUserThunk,
+  loginThunk,
+  registerThunk,
+} from "../actions/userThunk";
 
 const initialState = {
   user: null,
@@ -17,23 +21,56 @@ const userSlice = createSlice({
     removeUser: (state) => {
       state.user = null;
     },
+    logoutUser: (state) => {
+      state.user = null;
+      localStorage.removeItem("accesstoken");
+    },
   },
   extraReducers: (builder) => {
     builder
+      // login case
       .addCase(loginThunk.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
-        state.user = action.payload;
+        localStorage.setItem("accesstoken", action.payload.accessToken);
         state.loading = false;
       })
       .addCase(loginThunk.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+
+      //register case
+      .addCase(registerThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerThunk.fulfilled, (state, action) => {
+        localStorage.setItem("accesstoken", action.payload.accessToken);
+        state.loading = false;
+      })
+      .addCase(registerThunk.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+
+      //getCurrentUserThunk
+      .addCase(getCurrentUserThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCurrentUserThunk.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.loading = false;
+      })
+      .addCase(getCurrentUserThunk.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
       });
   },
 });
 
-export const { updateUser, removeUser } = userSlice.actions;
+export const { updateUser, removeUser, logoutUser } = userSlice.actions;
 export default userSlice.reducer;

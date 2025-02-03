@@ -1,19 +1,23 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import logo from "../../../assets/images/logo.png";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { BsSend } from "react-icons/bs";
-import { HiOutlineLogout } from "react-icons/hi";
+import { HiOutlineLogout, HiOutlineUserCircle } from "react-icons/hi";
 import { Modal } from "antd";
+
+import logo from "../../../assets/images/logo.png";
 import LoginModal from "../../auth/LoginModal";
 import RegisterModal from "../../auth/RegisterModal";
-import { useNavigate } from "react-router-dom";
-
+import { userSelector } from "../../../redux/selectors/selector";
+import { logoutUser } from "../../../redux/reducers/userReducer";
 
 function Header() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const user = useSelector(userSelector);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const showModal = (isLogin) => {
     setIsLoginModal(isLogin);
@@ -24,6 +28,9 @@ function Header() {
     setIsModalVisible(false);
   };
 
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
 
   const menuItems = [
     { name: "Phòng trọ", to: "/boarding" },
@@ -36,7 +43,12 @@ function Header() {
     <header className="header-home-page border-b border-gray-200">
       <div className="container">
         <nav className="bg-white py-4 flex justify-between items-center">
-          <img src={logo} alt="SMART Logo" className="logo cursor-pointer" onClick={() => navigate("/")} />
+          <img
+            src={logo}
+            alt="SMART Logo"
+            className="logo cursor-pointer"
+            onClick={() => navigate("/")}
+          />
 
           <div className="flex menu gap-4 items-center">
             {menuItems.map((item, index) => (
@@ -44,36 +56,77 @@ function Header() {
                 key={index}
                 to={item.to}
                 className={({ isActive }) =>
-                  `menu-item font-semibold hover:underline ${isActive ? "text-blue-800 underline" : "text-black"}`
+                  `menu-item font-semibold hover:underline ${
+                    isActive ? "text-blue-800 underline" : "text-black"
+                  }`
                 }
               >
                 {item.name}
               </NavLink>
             ))}
-
             <button className="px-4 py-2 cursor-pointer post-button text-white rounded-lg flex items-center hover:bg-blue-600 hover:text-white hover:scale-105 hover:border-blue-500 transition-all duration-300">
               <BsSend className="mr-2" />
               Đăng trọ mới ngay
             </button>
 
+            <div
+              className="relative"
+              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseLeave={() => setIsDropdownOpen(false)}
+            >
+              <div className="px-4 py-2 cursor-pointer auth-button text-white rounded-lg flex items-center">
+                {user?.user ? (
+                  <>
+                    <HiOutlineUserCircle className="mr-2" />
+                    <span className="auth-link hover:underline cursor-pointer">
+                      {user?.user?.fullname}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <HiOutlineLogout className="mr-2" />
+                    <span
+                      className="auth-link hover:underline cursor-pointer"
+                      onClick={() => showModal(true)}
+                    >
+                      Đăng nhập
+                    </span>
+                    <span className="mx-2">/</span>
+                    <span
+                      className="auth-link hover:underline cursor-pointer"
+                      onClick={() => showModal(false)}
+                    >
+                      Đăng ký
+                    </span>
+                  </>
+                )}
+              </div>
 
-            <div className="px-4 py-2 cursor-pointer auth-button text-white rounded-lg flex items-center">
-              <HiOutlineLogout className="mr-2" />
-              <span
-                className="auth-link hover:underline cursor-pointer"
-                onClick={() => showModal(true)}
-              >
-                Đăng nhập
-              </span>
-              <span className="mx-2">/</span>
-              <span
-                className="auth-link hover:underline cursor-pointer"
-                onClick={() => showModal(false)}
-              >
-                Đăng ký
-              </span>
+              {user?.user && isDropdownOpen && (
+                <div className="absolute right-0 w-48 bg-white border rounded-lg shadow-lg z-10">
+                  <ul className="py-1">
+                    {/* <li
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => navigate("/profile")}
+                    >
+                      Hồ sơ của tôi
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => navigate("/my-posts")}
+                    >
+                      Bài đăng của tôi
+                    </li> */}
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
+                      onClick={handleLogout}
+                    >
+                      Đăng xuất
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
-
           </div>
         </nav>
       </div>
@@ -86,9 +139,15 @@ function Header() {
         style={{ top: 20 }}
       >
         {isLoginModal ? (
-          <LoginModal setIsLoginModal={setIsLoginModal} />
+          <LoginModal
+            setIsLoginModal={setIsLoginModal}
+            triggerCancel={handleCancel}
+          />
         ) : (
-          <RegisterModal setIsLoginModal={setIsLoginModal} />
+          <RegisterModal
+            setIsLoginModal={setIsLoginModal}
+            triggerCancel={handleCancel}
+          />
         )}
       </Modal>
     </header>
