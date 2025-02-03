@@ -3,37 +3,36 @@ import { FcGoogle } from "react-icons/fc";
 import { AiFillApple } from "react-icons/ai";
 import { CiFacebook } from 'react-icons/ci';
 import { useDispatch } from "react-redux";
-import { useGoogleLogin } from '@react-oauth/google';
 import { toast } from 'react-toastify';
 import { getCurrentUserThunk, loginGoogleThunk } from '../../redux/actions/userThunk';
 import { handleActionNotSupport } from '../../utils/helpers';
+import { auth, googleProvider, signInWithPopup } from '../../services/configFirebase';
 
 const ThirdServicesLogin = ({ triggerCancel }) => {
     const dispatch = useDispatch();
 
-    const handleGoogleLogin = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            console.log("tokenResponse:", tokenResponse)
-            try {
-                const response = await dispatch(loginGoogleThunk({ token: tokenResponse.code }));
-                if (loginGoogleThunk.rejected.match(response)) {
-                    toast.error(response.payload || "Đăng nhập thất bại");
-                } else {
-                    const getCurrentUserAction = await dispatch(getCurrentUserThunk());
-                    if (getCurrentUserThunk.rejected.match(getCurrentUserAction)) {
-                        toast.error(response.payload || response.error.message);
-                    } else {
-                        toast.success("Đăng nhập thành công");
-                        triggerCancel();
-                    }
-                }
+    const handleGoogleLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
 
-            } catch (error) {
-                toast.error("Có lỗi xảy ra");
+            const token = await result.user.getIdToken();
+
+            const response = await dispatch(loginGoogleThunk({ token }));
+            if (loginGoogleThunk.rejected.match(response)) {
+                toast.error(response.payload || "Đăng nhập thất bại");
+            } else {
+                const getCurrentUserAction = await dispatch(getCurrentUserThunk());
+                if (getCurrentUserThunk.rejected.match(getCurrentUserAction)) {
+                    toast.error(response.payload || response.error.message);
+                } else {
+                    toast.success("Đăng nhập thành công");
+                    triggerCancel();
+                }
             }
-        },
-        onError: () => toast.error("Đăng nhập Google thất bại"),
-    });
+        } catch (error) {
+            toast.error("Đăng nhập Google thất bại");
+        }
+    };
 
     return (
         <div className="flex space-x-4 justify-center">
@@ -43,7 +42,7 @@ const ThirdServicesLogin = ({ triggerCancel }) => {
             </button>
 
             <button className="flex items-center px-8 py-3 border border-gray-300 rounded-lg shadow-md hover:bg-gray-100 cursor-pointer"
-                onClick={handleActionNotSupport}>
+                onClick={handleGoogleLogin}>
                 <FcGoogle size={25} />
             </button>
 
