@@ -8,26 +8,26 @@ import { RiFacebookCircleFill } from "react-icons/ri";
 
 function Footer() {
   return (
-    <footer class="w-full border-t border-gray-200 py-8">
-      <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-        <div class="flex flex-col items-center md:items-start mb-8 md:mb-0">
-          <img alt="SMART logo" class="mb-3" height="50"
+    <footer className="w-full border-t border-gray-200 py-8">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+        <div className="flex flex-col items-center md:items-start mb-8 md:mb-0">
+          <img alt="SMART logo" className="mb-3" height="50"
             src={logo} width="200" />
-          <p class="text-center md:text-left text-gray-700">
+          <p className="text-center md:text-left text-gray-700">
             Thành viên của {" "}
-            <a class="text-blue-800" href="https://trosmart.vn">
+            <a className="text-blue-800" href="https://trosmart.vn">
               TROSMART.vn
             </a>
           </p>
-          <div class="flex space-x-4 mt-2">
+          <div className="flex space-x-4 mt-2">
             <img alt="Phòng khám tốt logo" height="60" src={logo_phong_kham} width="60" />
             <img alt="Nhà đẹp đầy tốt logo" height="60" src={logo_nha_dat} width="60" />
             <img alt="Mặt bằng mới logo" height="60" src={logo_mat_bang} width="60" />
           </div>
         </div>
-        <div class="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-16">
+        <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-16">
           <div>
-            <h3 class="text-blue-800 font-bold mb-4">
+            <h3 className="text-blue-800 font-bold mb-4">
               THÔNG TIN
             </h3>
             <ul className="text-gray-700 space-y-2">
@@ -38,7 +38,7 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h3 class="text-blue-800 font-bold mb-4">
+            <h3 className="text-blue-800 font-bold mb-4">
               HỆ THỐNG
             </h3>
             <ul className="text-gray-700 space-y-2">
@@ -50,7 +50,7 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h3 class="text-blue-800 font-bold mb-4">
+            <h3 className="text-blue-800 font-bold mb-4">
               KẾT NỐI VỚI CHÚNG TÔI
             </h3>
             <ul className="text-gray-700 space-y-3">

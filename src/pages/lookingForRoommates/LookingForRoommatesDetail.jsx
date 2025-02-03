@@ -77,8 +77,8 @@ function LookingForRoommatesDetail() {
           </div>
 
           <div className="px-6 py-4">
-            <div class="border-t border-b border-gray-200 py-3">
-              <h1 class="text-xl font-semibold">Thông tin</h1>
+            <div className="border-t border-b border-gray-200 py-3">
+              <h1 className="text-xl font-semibold">Thông tin</h1>
               <ul className="text-gray-700 grid grid-cols-3">
                 {[
                   {
@@ -105,8 +105,8 @@ function LookingForRoommatesDetail() {
 
           {/* description */}
           <div className="px-6 pb-4">
-            <div class="border-b border-gray-200 pb-4">
-              <h1 class="text-xl font-semibold">Giới thiệu</h1>
+            <div className="border-b border-gray-200 pb-4">
+              <h1 className="text-xl font-semibold">Giới thiệu</h1>
 
               <pre style={{ fontFamily: "Roboto, sans-serif" }}>{room.description}</pre>
 
@@ -115,8 +115,8 @@ function LookingForRoommatesDetail() {
 
           {/* objects */}
           <div className="px-6 pb-4">
-            <div class="border-b border-gray-200 pb-4">
-              <h1 class="text-xl font-semibold">Đối tượng</h1>
+            <div className="border-b border-gray-200 pb-4">
+              <h1 className="text-xl font-semibold">Đối tượng</h1>
               <div className="grid grid-cols-3 gap-4 mt-4">
                 {room.objects &&
                   room.objects.map((object, index) => (
@@ -128,8 +128,8 @@ function LookingForRoommatesDetail() {
 
           {/* Utilities */}
           <div className="px-6 pb-4">
-            <div class="border-b border-gray-200 pb-4">
-              <h1 class="text-xl font-semibold">Tiện nghi</h1>
+            <div className="border-b border-gray-200 pb-4">
+              <h1 className="text-xl font-semibold">Tiện nghi</h1>
               <div className="grid grid-cols-3 gap-4 mt-4">
                 {room.utilities &&
                   room.utilities.map((utility, index) => (
@@ -141,8 +141,8 @@ function LookingForRoommatesDetail() {
 
           {/* environments */}
           <div className="px-6 pb-4">
-            <div class="border-b border-gray-200 pb-4">
-              <h1 class="text-xl font-semibold">Môi trường xung quanh</h1>
+            <div className="border-b border-gray-200 pb-4">
+              <h1 className="text-xl font-semibold">Môi trường xung quanh</h1>
               <div className="grid grid-cols-3 gap-4 mt-4">
                 {room.environments &&
                   room.environments.map((environment, index) => (
@@ -154,8 +154,8 @@ function LookingForRoommatesDetail() {
 
           {/* address */}
           <div className="px-6">
-            <div class="">
-              <h1 class="text-xl font-semibold">Đường đi</h1>
+            <div className="">
+              <h1 className="text-xl font-semibold">Đường đi</h1>
               <div className="w-full mt-4">
                 <img
                   src={address_guide}

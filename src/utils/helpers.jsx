@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { FaUserGraduate, FaBriefcase, FaHome, FaHeart, FaStore, FaHospital, FaTree, FaWifi, FaToilet, FaShower, FaUtensils, FaTshirt, FaSnowflake, FaBed, FaCar, FaCamera, FaBus, FaChalkboardTeacher } from "react-icons/fa";
+import { FaUserGraduate, FaBriefcase, FaHome, FaHeart, FaStore, FaHospital, FaTree, FaWifi, FaToilet, FaShower, FaUtensils, FaTshirt, FaSnowflake, FaBed, FaCar, FaBus, FaChalkboardTeacher } from "react-icons/fa";
 import { MdShoppingCart, MdLocalGroceryStore, MdLocalLaundryService, MdOutlineSecurity, MdDirectionsTransit } from "react-icons/md";
 import { AiOutlineApartment } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 export const iconMap = {
   objects: {
@@ -56,3 +57,7 @@ export function useScrollToTop() {
     });
   }, []);
 }
+
+export const handleActionNotSupport = () => {
+  toast.warning("Tính năng chưa hỗ trợ");
+};

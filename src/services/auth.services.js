@@ -9,6 +9,15 @@ export const login = async (credentials) => {
   }
 };
 
+export const loginWithGoogle = async (credentials) => {
+  try {
+    const response = await axiosInstance.post("/api/auth/loginGoogle", credentials);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const register = async (userData) => {
   try {
     const response = await axiosInstance.post("api/auth/register", userData);
