@@ -489,6 +489,47 @@ export const rooms_sample = [
     contact_email: "haianh@gmail.com",
     contact_address: "123 Main St, City Center",
   },
+   {
+    id: 11,
+    title:
+      "Studio full nội thất số 12/4/6C Nguyễn Cảnh Dị, Phường 4, Quận Tân Bình",
+    type: "post_room",
+    price: 6500000,
+    category: "Apartment",
+    area: 75,
+    description: "A modern, fully furnished apartment with a great view.",
+    objects: ["Đi học", "Đi làm", "Gia đình", "Cặp đôi"],
+    environments: ["Chợ", "Siêu thị", "Bệnh viện", "Công viên"],
+    utilities: [
+      "Wifi",
+      "Vệ sinh trong",
+      "Phòng tắm",
+      "Kệ bếp",
+      "Máy giặt",
+      "Điều hòa",
+      "Tủ lạnh",
+      "Giường nệm",
+      "Tủ áo quần",
+      "Bãi để xe riêng",
+      "Camera an ninh",
+    ],
+    address:
+      "12/4/6C Nguyễn Cảnh Dị, Phường 4, Quận Tân Bình, Thành phố Hồ Chí Minh",
+    img_links: [
+      "https://cdn.chotot.com/PUbgZCS9vR2QsfjRDU_jy7EU7vhaPbLVcoNz8LcfMhI/preset:view/plain/76a8abab8f241783ce7a2d2d45e72a80-2895418999997961399.jpg",
+      "https://cdn.chotot.com/J5qKEKm2lfZRTJ_d7o1JqGq6sP6WBCcriP4hCuSQKGI/preset:view/plain/f8c1ed87576f918ef85fade886201477-2895419000374215478.jpg",
+      "https://cdn.chotot.com/Y2xfQvM-kzw9IqRJetTqFy_BuDajczCjVADcgDlbGKI/preset:view/plain/8316b09c0c31bad4cb379fd669f76ca3-2895419000105801666.jpg",
+      "https://cdn.chotot.com/GwXs0opgpJUWmAaBQ-USxC-cxN0UPeEGdt4LUzqWpaE/preset:view/plain/79b548d8f6ee741f4bf2b3fd94309fb7-2895418999376976473.jpg",
+      "https://cdn.chotot.com/CqRP4UuYFald0ORbsOGgmulCFdKKZxmP-B-jy2lUeTM/preset:view/plain/aa4c6449a8e68e03825b0e915e2cedb4-2895419000075073736.jpg",
+      "https://cdn.chotot.com/Sk5BdPSWHrmQlaOgdggZiSCMUTtsH1srCLz3VznpOf4/preset:view/plain/55bb6500953ecf38a0595b8b42127d55-2895419000270138023.jpg",
+      "https://cdn.chotot.com/FCaMnUyt2-cVLurqb_ZeheJPnJXoX_67M1s4pUF2OeA/preset:view/plain/8aee5ec87257867c893ea4a84f6c5d3a-2895418999967896810.jpg",
+    ],
+    status: "active",
+    contact_fullname: "Hải Anh",
+    contact_phone: "0915567797",
+    contact_email: "haianh@gmail.com",
+    contact_address: "123 Main St, City Center",
+  },
 ];
 
 export const rooms_carousel = [

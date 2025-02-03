@@ -3,7 +3,7 @@ import { FaUserGraduate, FaBriefcase, FaHome, FaHeart, FaStore, FaHospital, FaTr
 import { MdShoppingCart, MdLocalGroceryStore, MdLocalLaundryService, MdOutlineSecurity, MdDirectionsTransit } from "react-icons/md";
 import { AiOutlineApartment } from "react-icons/ai";
 
-const iconMap = {
+export const iconMap = {
   objects: {
     "Đi học": <FaUserGraduate />,
     "Đi làm": <FaBriefcase />,
