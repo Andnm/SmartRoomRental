@@ -36,7 +36,7 @@ export const formatTime = (date) => {
 };
 
 
-export const translateHousingType = (type) => {
+export const translateHousingCategory = (type) => {
   return housingCategoryTranslation[type] || "Không xác định";
 };
 

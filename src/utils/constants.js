@@ -17,13 +17,22 @@ import news_2 from "../assets/images/news_2.png";
 import news_3 from "../assets/images/news_3.png";
 import news_4 from "../assets/images/news_4.png";
 
-
 export const hot_news = [
-  {title: "Khám phá hệ thống đăng tin và quản lý trọ hiệu quả dành cho chủ trọ", img_link: news_1}, 
-  {title: "Thực hư về hệ thống tìm trọ toàn quốc HOT NHẤT hiện nay!", img_link: news_2},
-  {title: "Giao diện nâng cấp - Trải nghiệm nâng tầm", img_link: news_3},
-  {title: "Thủ tục đăng ký tạm trú tạm vắng cho người ở trọ mới nhất 2024", img_link: news_4}
-]
+  {
+    title:
+      "Khám phá hệ thống đăng tin và quản lý trọ hiệu quả dành cho chủ trọ",
+    img_link: news_1,
+  },
+  {
+    title: "Thực hư về hệ thống tìm trọ toàn quốc HOT NHẤT hiện nay!",
+    img_link: news_2,
+  },
+  { title: "Giao diện nâng cấp - Trải nghiệm nâng tầm", img_link: news_3 },
+  {
+    title: "Thủ tục đăng ký tạm trú tạm vắng cho người ở trọ mới nhất 2024",
+    img_link: news_4,
+  },
+];
 
 export const quantity_provinces_dorn = [
   { province: "Hồ Chí Minh", quantity: 8422 },
@@ -73,7 +82,7 @@ export const rooms_sample = [
   {
     id: 1,
     title:
-      "Studio full nội thất số 12/4/6C Nguyễn Cảnh Dị, Phường 4, Quận Tân Bình",
+      "Studio full nội thất số 12/4/6C Nguyễn Cảnh Dị, Phường 4, Quận Tân Bình, Thành phố Hồ Chí Minh",
     type: "post_room",
     price: 6500000,
     category: "Self-managed boarding house",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaUserGraduate, FaBriefcase, FaHome, FaHeart, FaStore, FaHospital, FaTree, FaWifi, FaToilet, FaShower, FaUtensils, FaTshirt, FaSnowflake, FaBed, FaCar, FaCamera, FaBus, FaChalkboardTeacher } from "react-icons/fa";
 import { MdShoppingCart, MdLocalGroceryStore, MdLocalLaundryService, MdOutlineSecurity, MdDirectionsTransit } from "react-icons/md";
 import { AiOutlineApartment } from "react-icons/ai";
@@ -38,7 +38,7 @@ const IconComponent = ({ category, name }) => {
   const icon = iconMap[category]?.[name] || <AiOutlineApartment />;
   return (
     <div className="flex items-center space-x-2">
-      <span className="text-xl">{icon}</span>
+      <span className="text-xl text-gray-500">{icon}</span>
       <span>{name}</span>
     </div>
   );
@@ -47,3 +47,12 @@ const IconComponent = ({ category, name }) => {
 export const ObjectIcon = ({ name }) => <IconComponent category="objects" name={name} />;
 export const EnvironmentIcon = ({ name }) => <IconComponent category="environments" name={name} />;
 export const UtilityIcon = ({ name }) => <IconComponent category="utilities" name={name} />;
+
+export function useScrollToTop() {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' 
+    });
+  }, []);
+}
