@@ -8,8 +8,12 @@ const RoomCard = ({ room, is_hot }) => {
     const navigate = useNavigate();
 
     const handleNavigation = () => {
-        const categoryPath = boardingCategories.includes(room.category) ? "boarding" : "apartment-fullhouse";
-        navigate(`/${categoryPath}/${room.id}`);
+        if (room.type === "looking_for_roommates") {
+            navigate(`/looking-for-roommates/${room.id}`);
+        } else {
+            const categoryPath = boardingCategories.includes(room.category) ? "boarding" : "apartment-fullhouse";
+            navigate(`/${categoryPath}/${room.id}`);
+        }
     };
 
     return (

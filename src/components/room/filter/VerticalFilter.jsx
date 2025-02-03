@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { iconMap } from '../../../utils/helpers'
 import { FaFilter } from 'react-icons/fa6'
 

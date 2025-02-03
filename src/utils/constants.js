@@ -205,7 +205,7 @@ export const rooms_sample = [
   {
     id: 4,
     title:
-      "Studio full nội thất số 12/4/6C Nguyễn Cảnh Dị, Phường 4, Quận Tân Bình",
+      "Cần tìm nữ ở ghép phòng cực đẹp tại 143 Hoàng Hoa Thám, Phường 13",
     type: "looking_for_roommates",
     price: 6500000,
     category: "Apartment",
@@ -227,7 +227,7 @@ export const rooms_sample = [
       "Camera an ninh",
     ],
     address:
-      "12/4/6C Nguyễn Cảnh Dị, Phường 4, Quận Tân Bình, Thành phố Hồ Chí Minh",
+      "143 Hoàng Hoa Thám, Phường 13, Thành phố Hồ Chí Minh",
     img_links: [
       "https://cdn.chotot.com/PUbgZCS9vR2QsfjRDU_jy7EU7vhaPbLVcoNz8LcfMhI/preset:view/plain/76a8abab8f241783ce7a2d2d45e72a80-2895418999997961399.jpg",
       "https://cdn.chotot.com/J5qKEKm2lfZRTJ_d7o1JqGq6sP6WBCcriP4hCuSQKGI/preset:view/plain/f8c1ed87576f918ef85fade886201477-2895419000374215478.jpg",
@@ -451,10 +451,10 @@ export const rooms_sample = [
   {
     id: 10,
     title:
-      "Studio full nội thất số 12/4/6C Nguyễn Cảnh Dị, Phường 4, Quận Tân Bình",
-    type: "post_room",
+      "Ký túc xá số 234 Nguyễn Tri Phương, Phường 4, Quận 10, Thành phố Hồ Chí Minh",
+    type: "looking_for_roommates",
     price: 6500000,
-    category: "Apartment",
+    category: "Dormitory",
     area: 75,
     description: "A modern, fully furnished apartment with a great view.",
     objects: ["Đi học", "Đi làm", "Gia đình", "Cặp đôi"],
@@ -473,7 +473,7 @@ export const rooms_sample = [
       "Camera an ninh",
     ],
     address:
-      "12/4/6C Nguyễn Cảnh Dị, Phường 4, Quận Tân Bình, Thành phố Hồ Chí Minh",
+      "234 Nguyễn Tri Phương, Phường 4, Quận 10, Thành phố Hồ Chí Minh",
     img_links: [
       "https://cdn.chotot.com/PUbgZCS9vR2QsfjRDU_jy7EU7vhaPbLVcoNz8LcfMhI/preset:view/plain/76a8abab8f241783ce7a2d2d45e72a80-2895418999997961399.jpg",
       "https://cdn.chotot.com/J5qKEKm2lfZRTJ_d7o1JqGq6sP6WBCcriP4hCuSQKGI/preset:view/plain/f8c1ed87576f918ef85fade886201477-2895419000374215478.jpg",

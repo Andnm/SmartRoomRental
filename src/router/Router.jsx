@@ -8,6 +8,8 @@ import BoardingList from "../pages/boarding/BoardingList";
 import BoardingDetail from "../pages/boarding/BoardingDetail";
 import ApartmentFullhouseList from "../pages/apartmentFullHouse/ApartmentFullhouseList";
 import ApartmentFullHouseDetail from "../pages/apartmentFullHouse/ApartmentFullHouseDetail";
+import LookingForRoommatesDetail from "../pages/lookingForRoommates/LookingForRoommatesDetail";
+import LookingForRoommatesList from "../pages/lookingForRoommates/LookingForRoommatesList";
 
 
 const Router = () => {
@@ -27,6 +29,8 @@ const Router = () => {
         <Route path="/boarding/:id" element={<BoardingDetail />} />
         <Route path="/apartment-fullhouse" element={<ApartmentFullhouseList />} />
         <Route path="/apartment-fullhouse/:id" element={<ApartmentFullHouseDetail />} />
+        <Route path="/looking-for-roommates" element={<LookingForRoommatesList />} />
+        <Route path="/looking-for-roommates/:id" element={<LookingForRoommatesDetail />} />
       </Route>
       <Route path="/*" element={<NotFound />} />
     </Routes>

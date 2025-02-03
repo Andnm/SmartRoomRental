@@ -28,7 +28,7 @@ function Header() {
   const menuItems = [
     { name: "Phòng trọ", to: "/boarding" },
     { name: "Nhà nguyên căn, chung cư", to: "/apartment-fullhouse" },
-    { name: "Tìm bạn ở ghép", to: "/looking-for-teammates" },
+    { name: "Tìm bạn ở ghép", to: "/looking-for-roommates" },
     { name: "Blog", to: "/blogs" },
   ];
 

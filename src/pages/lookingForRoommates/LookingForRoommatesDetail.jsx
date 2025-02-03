@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { apartmentFullHouseCategories, rooms_sample } from "../../utils/constants";
+import { rooms_sample } from "../../utils/constants";
 import ImageGridGallery from "../../components/room/gallery/ImageGridGallery";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaHome, FaPhoneAlt } from "react-icons/fa";
@@ -11,12 +11,12 @@ import { MdOutlineEmail } from "react-icons/md";
 import { EnvironmentIcon, ObjectIcon, useScrollToTop, UtilityIcon } from "../../utils/helpers";
 import address_guide from "../../assets/images/address_guide.png";
 
-function ApartmentFullHouseDetail() {
+function LookingForRoommatesDetail() {
   useScrollToTop();
 
   const { id } = useParams();
   const room = rooms_sample.find(
-    (room) => room.id === parseInt(id) && apartmentFullHouseCategories.includes(room.category)
+    (room) => room.id === parseInt(id) && room.type === "looking_for_roommates"
   );
 
   if (!room) {
@@ -30,7 +30,7 @@ function ApartmentFullHouseDetail() {
         <div className="breadcrumb py-4">
           <nav className="text-sm text-gray-500 flex items-center">
             <Link to="/" className="hover:underline text-blue-800 mr-2 font-semibold">Trang chủ</Link> {"/"}
-            <Link to="/apartment-fullhouse" className="hover:underline text-blue-800 mx-2 font-semibold">Nhà nguyên căn, chưng cư</Link> {"/"}
+            <Link to="/looking-for-roommates" className="hover:underline text-blue-800 mx-2 font-semibold">Tìm bạn ở ghép</Link> {"/"}
             <span className="text-gray-400 font-semibold inline-block ml-2" title={room.title}>{room.title}</span>
           </nav>
         </div>
@@ -173,4 +173,4 @@ function ApartmentFullHouseDetail() {
   );
 }
 
-export default ApartmentFullHouseDetail;
+export default LookingForRoommatesDetail;

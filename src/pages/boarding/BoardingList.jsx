@@ -15,7 +15,7 @@ function BoardingList() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredRooms = rooms_sample.filter(
-    (room) => boardingCategories.includes(room.category) && room.status === "active"
+    (room) => boardingCategories.includes(room.category) && room.status === "active" && room.type === "post_room"
   );
 
   const handlePageChange = (page) => {

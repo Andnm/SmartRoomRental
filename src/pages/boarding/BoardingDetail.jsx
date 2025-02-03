@@ -22,7 +22,7 @@ function BoardingDetail() {
   );
 
   if (!room) {
-    return <h2>Không tìm thấy phòng trọ phù hợp!</h2>;
+    return <h2 className="text-center py-4">Không tìm thấy phòng trọ hoặc chung cư/nhà nguyên căn phù hợp!</h2>;
   }
 
   return (

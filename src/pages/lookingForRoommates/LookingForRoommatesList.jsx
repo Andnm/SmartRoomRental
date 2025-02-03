@@ -5,17 +5,17 @@ import { IoLocationSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { Pagination } from 'antd';
 import VerticalFilter from '../../components/room/filter/VerticalFilter';
-import { apartmentFullHouseCategories, rooms_sample } from '../../utils/constants';
+import { rooms_sample } from '../../utils/constants';
 import HorizontalCardRoom from '../../components/room/roomCard/HorizontalCardRoom';
 
 const itemsPerPage = 10;
 
-function ApartmentFullhouseList() {
+function LookingForRoommatesList() {
   const [selectedFilters, setSelectedFilters] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredRooms = rooms_sample.filter(
-    (room) => apartmentFullHouseCategories.includes(room.category) && room.status === "active" && room.type === "post_room"
+    (room) => room.type === "looking_for_roommates"
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -110,4 +110,4 @@ function ApartmentFullhouseList() {
   );
 }
 
-export default ApartmentFullhouseList;
+export default LookingForRoommatesList;
