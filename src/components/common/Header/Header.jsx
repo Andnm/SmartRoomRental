@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsSend } from "react-icons/bs";
-import { HiOutlineLogout, HiOutlineUserCircle } from "react-icons/hi";
+import { HiOutlineLogout } from "react-icons/hi";
 import { Avatar, Modal } from "antd";
 
 import logo from "../../../assets/images/logo.png";
@@ -11,6 +11,8 @@ import RegisterModal from "../../auth/RegisterModal";
 import { userSelector } from "../../../redux/selectors/selector";
 import { logoutUser } from "../../../redux/reducers/userReducer";
 import { generateFallbackAvatar } from "../../../utils/helpers";
+import { getCurrentUserThunk } from "../../../redux/actions/userThunk";
+import { toast } from "react-toastify";
 
 function Header() {
   const navigate = useNavigate();
@@ -19,6 +21,22 @@ function Header() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    const handleRelogin = async () => {
+      const token = await localStorage.getItem("accesstoken");
+      if (token !== "undefined") {
+        const getCurrentUserAction = await dispatch(getCurrentUserThunk());
+        if (getCurrentUserThunk.rejected.match(getCurrentUserAction)) {
+          toast.error(
+            getCurrentUserAction.payload || getCurrentUserAction.error.message
+          );
+        }
+      }
+    };
+    handleRelogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const showModal = (isLogin) => {
     setIsLoginModal(isLogin);
@@ -57,7 +75,8 @@ function Header() {
                 key={index}
                 to={item.to}
                 className={({ isActive }) =>
-                  `menu-item font-semibold hover:underline ${isActive ? "text-blue-800 underline" : "text-black"
+                  `menu-item font-semibold hover:underline ${
+                    isActive ? "text-blue-800 underline" : "text-black"
                   }`
                 }
               >
@@ -79,10 +98,14 @@ function Header() {
                   <>
                     <Avatar
                       src={
-                        user?.user?.avatar_url ?? generateFallbackAvatar(user?.user?.fullname)
+                        user?.user?.avatar_url ??
+                        generateFallbackAvatar(user?.user?.fullname)
                       }
                       alt={"avatar"}
-                      style={{ marginRight: "8px", border: "1px solid #d9d9d9" }}
+                      style={{
+                        marginRight: "8px",
+                        border: "1px solid #d9d9d9",
+                      }}
                       size={25}
                     />
 
