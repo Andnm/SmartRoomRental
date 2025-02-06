@@ -17,6 +17,13 @@ import news_2 from "../assets/images/news_2.png";
 import news_3 from "../assets/images/news_3.png";
 import news_4 from "../assets/images/news_4.png";
 
+export const menuItemsHeader = [
+  { name: "Phòng trọ", to: "/boarding" },
+  { name: "Nhà nguyên căn, chung cư", to: "/apartment-fullhouse" },
+  { name: "Tìm bạn ở ghép", to: "/looking-for-roommates" },
+  { name: "Blog", to: "/blogs" },
+];
+
 export const hot_news = [
   {
     title:

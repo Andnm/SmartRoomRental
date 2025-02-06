@@ -9,6 +9,14 @@ import ApartmentFullhouseList from "../pages/apartmentFullHouse/ApartmentFullhou
 import ApartmentFullHouseDetail from "../pages/apartmentFullHouse/ApartmentFullHouseDetail";
 import LookingForRoommatesDetail from "../pages/lookingForRoommates/LookingForRoommatesDetail";
 import LookingForRoommatesList from "../pages/lookingForRoommates/LookingForRoommatesList";
+import Account from "../pages/account";
+import ChangePassword from "../pages/account/ChangePassword";
+import Innkeeper from "../pages/innkeeper";
+import Reviews from "../pages/innkeeper/Reviews";
+import ManageBoarding from "../pages/innkeeper/ManageBoarding";
+import Membership from "../pages/innkeeper/Membership";
+import Pricing from "../pages/innkeeper/Pricing";
+import History from "../pages/innkeeper/History";
 
 
 const Router = () => {
@@ -29,6 +37,15 @@ const Router = () => {
         <Route path="/apartment-fullhouse/:id" element={<ApartmentFullHouseDetail />} />
         <Route path="/looking-for-roommates" element={<LookingForRoommatesList />} />
         <Route path="/looking-for-roommates/:id" element={<LookingForRoommatesDetail />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/account/change-password" element={<ChangePassword />} />
+        <Route path="/innkeeper" element={<Innkeeper />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/manage-boarding" element={<ManageBoarding />} />
+        <Route path="/membership" element={<Membership />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/reviews" element={<Reviews />} />
+
       </Route>
       <Route path="/*" element={<NotFound />} />
     </Routes>

@@ -3,6 +3,16 @@ import { FaUserGraduate, FaBriefcase, FaHome, FaHeart, FaStore, FaHospital, FaTr
 import { MdShoppingCart, MdLocalGroceryStore, MdLocalLaundryService, MdOutlineSecurity, MdDirectionsTransit } from "react-icons/md";
 import { AiOutlineApartment } from "react-icons/ai";
 import { toast } from "react-toastify";
+import { FaChartPie, FaListUl, FaComments, FaHistory, FaDollarSign, FaCrown } from "react-icons/fa";
+
+export const innkeeper_menu = [
+  { name: "Thông tin chung", icon: <FaChartPie />, path: "/innkeeper" },
+  { name: "Quản lý trọ", icon: <FaListUl />, path: "/manage-boarding" },
+  { name: "Quản lý đánh giá", icon: <FaComments />, path: "/reviews" },
+  { name: "Lịch sử", icon: <FaHistory />, path: "/history" },
+  { name: "Bảng phí đăng tin", icon: <FaDollarSign />, path: "/pricing" },
+  { name: "Gói hội viên", icon: <FaCrown />, path: "/membership" },
+];
 
 export const iconMap = {
   objects: {

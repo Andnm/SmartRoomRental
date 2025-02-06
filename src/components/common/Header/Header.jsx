@@ -12,7 +12,10 @@ import { userSelector } from "../../../redux/selectors/selector";
 import { logoutUser } from "../../../redux/reducers/userReducer";
 import { generateFallbackAvatar } from "../../../utils/helpers";
 import { getCurrentUserThunk } from "../../../redux/actions/userThunk";
-import { toast } from "react-toastify";
+import { menuItemsHeader } from "../../../utils/constants";
+import { FaUser } from "react-icons/fa";
+import { IoHome } from "react-icons/io5";
+import { RiLogoutBoxRLine } from "react-icons/ri";
 
 function Header() {
   const navigate = useNavigate();
@@ -28,14 +31,13 @@ function Header() {
       if (token !== "undefined") {
         const getCurrentUserAction = await dispatch(getCurrentUserThunk());
         if (getCurrentUserThunk.rejected.match(getCurrentUserAction)) {
-          toast.error(
+          console.log(
             getCurrentUserAction.payload || getCurrentUserAction.error.message
           );
         }
       }
     };
     handleRelogin();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showModal = (isLogin) => {
@@ -51,13 +53,6 @@ function Header() {
     dispatch(logoutUser());
   };
 
-  const menuItems = [
-    { name: "Phòng trọ", to: "/boarding" },
-    { name: "Nhà nguyên căn, chung cư", to: "/apartment-fullhouse" },
-    { name: "Tìm bạn ở ghép", to: "/looking-for-roommates" },
-    { name: "Blog", to: "/blogs" },
-  ];
-
   return (
     <header className="header-home-page border-b border-gray-200">
       <div className="container">
@@ -70,13 +65,12 @@ function Header() {
           />
 
           <div className="flex menu gap-4 items-center">
-            {menuItems.map((item, index) => (
+            {menuItemsHeader.map((item, index) => (
               <NavLink
                 key={index}
                 to={item.to}
                 className={({ isActive }) =>
-                  `menu-item font-semibold hover:underline ${
-                    isActive ? "text-blue-800 underline" : "text-black"
+                  `menu-item font-semibold hover:underline ${isActive ? "text-blue-800 underline" : "text-black"
                   }`
                 }
               >
@@ -90,7 +84,7 @@ function Header() {
 
             <div
               className="relative"
-              onMouseEnter={() => setIsDropdownOpen(true)}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               onMouseLeave={() => setIsDropdownOpen(false)}
             >
               <div className="px-4 py-2 cursor-pointer auth-button text-white rounded-lg flex items-center">
@@ -134,26 +128,38 @@ function Header() {
               </div>
 
               {user?.user && isDropdownOpen && (
-                <div className="absolute right-0 w-48 bg-white border rounded-lg shadow-lg z-10">
-                  <ul className="py-1">
-                    {/* <li
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => navigate("/profile")}
+                <div className="absolute right-0 w-56 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                  <ul className="py-3">
+                    <li
+                      className="px-8 py-2 flex flex-row gap-2 items-center hover:bg-gray-100 hover:text-blue-800 cursor-pointer"
+                      onClick={() => navigate("/account")}
                     >
-                      Hồ sơ của tôi
+                      <FaUser
+                        className="text-sm"
+                      />
+                      Thông tin cá nhân
                     </li>
+
                     <li
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => navigate("/my-posts")}
+                      className="px-8 py-2 flex flex-row gap-2 my-2 items-center hover:bg-gray-100 hover:text-blue-800 cursor-pointer"
+                      onClick={() => navigate("/innkeeper")}
                     >
-                      Bài đăng của tôi
-                    </li> */}
+                      <IoHome
+                        className="text-sm"
+                      />
+                      Dành cho chủ trọ
+                    </li>
+
                     <li
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
+                      className="px-8 py-2 flex flex-row gap-2 items-center hover:bg-gray-100 text-red-500 cursor-pointer"
                       onClick={handleLogout}
                     >
+                      <RiLogoutBoxRLine
+                        className="text-sm"
+                      />
                       Đăng xuất
                     </li>
+
                   </ul>
                 </div>
               )}

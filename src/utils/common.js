@@ -45,3 +45,14 @@ export const getCategoryLabel = (category) => {
 };
 
 export const getRandomRating = () => (Math.random() * (5.0 - 4.0) + 4.0).toFixed(1);
+
+export const translateRank = (rank) => {
+  const rankMap = {
+    Normal: "Bình thường",
+    Silver: "Bạc",
+    Gold: "Vàng",
+    Diamond: "Kim cương",
+  };
+
+  return rankMap[rank] || rank;
+};
