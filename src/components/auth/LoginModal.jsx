@@ -12,12 +12,14 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const handleLogin = async () => {
+    setIsLoading(true);
     try {
       const response = await dispatch(loginThunk(formData));
       if (loginThunk.rejected.match(response)) {
@@ -29,13 +31,15 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
         } else {
           setFormData({
             email: "",
-            password: ""
+            password: "",
           });
           triggerCancel();
         }
       }
     } catch (error) {
       toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -86,16 +90,17 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
 
           <div className="mb-2 mt-10">
             <button
-              className={`cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900 disabled:bg-gray-400 ${user?.loading ? "disabled:cursor-wait" : ""
-                }`}
-              disabled={user?.loading}
+              className={`cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900 disabled:bg-gray-400 ${
+                isLoading ? "disabled:cursor-wait" : ""
+              }`}
+              disabled={isLoading}
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
                 handleLogin();
               }}
             >
-              <Spin spinning={user?.loading} />
+              <Spin spinning={isLoading} />
               Đăng nhập
             </button>
           </div>
@@ -119,7 +124,11 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
           <hr className="flex-grow border-gray-300" />
         </div>
 
-        <ThirdServicesLogin triggerCancel={triggerCancel}/>
+        <ThirdServicesLogin
+          triggerCancel={triggerCancel}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
       </div>
     </div>
   );

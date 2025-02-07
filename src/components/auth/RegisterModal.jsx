@@ -16,6 +16,7 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
   const user = useSelector(userSelector);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -36,6 +37,8 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
       fullname: formData.name,
       phone_number: formData.phone,
     };
+
+    setIsLoading(true);
 
     try {
       const action = await dispatch(registerThunk(data));
@@ -58,6 +61,8 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
       }
     } catch (error) {
       toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -80,7 +85,9 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
               type="text"
               style={{ borderColor: "#E4E4E7" }}
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
             />
           </div>
 
@@ -91,7 +98,9 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
               type="text"
               style={{ borderColor: "#E4E4E7" }}
               value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
+              }
             />
           </div>
 
@@ -102,7 +111,9 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
               type="text"
               style={{ borderColor: "#E4E4E7" }}
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
             />
           </div>
 
@@ -113,7 +124,9 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
               type={showPassword ? "text" : "password"}
               style={{ borderColor: "#E4E4E7" }}
               value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
             />
             <button
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
@@ -151,11 +164,12 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
                 e.preventDefault();
                 handleRegister();
               }}
-              className={`cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900 disabled:bg-gray-400 ${user?.loading ? "disabled:cursor-wait" : ""
-                } `}
-              disabled={user?.loading}
+              className={`cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900 disabled:bg-gray-400 ${
+                isLoading ? "disabled:cursor-wait" : ""
+              } `}
+              disabled={isLoading}
             >
-              <Spin spinning={user?.loading} />
+              <Spin spinning={isLoading} />
               Đăng ký
             </button>
           </div>
@@ -181,7 +195,11 @@ const RegisterModal = ({ setIsLoginModal, triggerCancel }) => {
           <hr className="flex-grow border-gray-300" />
         </div>
 
-        <ThirdServicesLogin triggerCancel={triggerCancel}/>
+        <ThirdServicesLogin
+          triggerCancel={triggerCancel}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
       </div>
     </div>
   );
