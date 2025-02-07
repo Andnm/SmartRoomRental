@@ -30,7 +30,7 @@ const InnkeeperSidebar = () => {
             />
           </div>
           <div>
-            <h2 className=" text-sm text-gray-400">{userData?.user?.fullname}</h2>
+            <h2 className=" text-sm text-gray-600 font-medium">{userData?.user?.fullname}</h2>
             <p className="text-sm">Hạng tài khoản: {translateRank(userData?.user?.rank)}</p>
           </div>
         </div>
