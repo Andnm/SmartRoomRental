@@ -70,14 +70,18 @@ function Header() {
                 key={index}
                 to={item.to}
                 className={({ isActive }) =>
-                  `menu-item font-semibold hover:underline ${isActive ? "text-blue-800 underline" : "text-black"
+                  `menu-item font-semibold hover:underline ${
+                    isActive ? "text-blue-800 underline" : "text-black"
                   }`
                 }
               >
                 {item.name}
               </NavLink>
             ))}
-            <button className="px-4 py-2 cursor-pointer post-button text-white rounded-lg flex items-center hover:bg-blue-600 hover:text-white hover:scale-105 hover:border-blue-500 transition-all duration-300">
+            <button
+              className="px-4 py-2 cursor-pointer post-button text-white rounded-lg flex items-center hover:bg-blue-600 hover:text-white hover:scale-105 hover:border-blue-500 transition-all duration-300"
+              onClick={() => navigate("/innkeeper")}
+            >
               <BsSend className="mr-2" />
               Đăng trọ mới ngay
             </button>
@@ -134,9 +138,7 @@ function Header() {
                       className="px-8 py-2 flex flex-row gap-2 items-center hover:bg-gray-100 hover:text-blue-800 cursor-pointer"
                       onClick={() => navigate("/account")}
                     >
-                      <FaUser
-                        className="text-sm"
-                      />
+                      <FaUser className="text-sm" />
                       Thông tin cá nhân
                     </li>
 
@@ -144,9 +146,7 @@ function Header() {
                       className="px-8 py-2 flex flex-row gap-2 my-2 items-center hover:bg-gray-100 hover:text-blue-800 cursor-pointer"
                       onClick={() => navigate("/innkeeper")}
                     >
-                      <IoHome
-                        className="text-sm"
-                      />
+                      <IoHome className="text-sm" />
                       Dành cho chủ trọ
                     </li>
 
@@ -154,12 +154,9 @@ function Header() {
                       className="px-8 py-2 flex flex-row gap-2 items-center hover:bg-gray-100 text-red-500 cursor-pointer"
                       onClick={handleLogout}
                     >
-                      <RiLogoutBoxRLine
-                        className="text-sm"
-                      />
+                      <RiLogoutBoxRLine className="text-sm" />
                       Đăng xuất
                     </li>
-
                   </ul>
                 </div>
               )}
