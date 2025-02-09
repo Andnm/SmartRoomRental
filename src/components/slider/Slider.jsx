@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useMemo } from "react";
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterMenuByRole, sliderMenu } from "../../utils/helpers";
 import { globalSelector, userSelector } from "../../redux/selectors/selector";
 import { setSliderMenuItemSelectedKey } from "../../redux/reducers/globalReducer";
+import { areInArray } from "../../utils/common";
 
 const { Sider } = Layout;
 const SliderComponent = () => {
@@ -17,11 +17,6 @@ const SliderComponent = () => {
 
   const userData = useSelector(userSelector);
   const globalData = useSelector(globalSelector);
-
-  const filteredMenu = useMemo(
-    () => filterMenuByRole(sliderMenu, userData?.user?.role_id),
-    [userData]
-  );
 
   return (
     <Sider
@@ -35,13 +30,15 @@ const SliderComponent = () => {
       }}
       className="slider-container"
     >
-      <div className="demo-logo-vertical text-center uppercase text-2xl font-bold">
-        General
+      <div className="demo-logo-vertical text-center uppercase text-2xl font-bold mb-10">
+        Tổng quan
       </div>
       <Menu
         mode="inline"
         selectedKeys={[globalData.sliderMenuItemSelectedKey]}
-        items={filteredMenu}
+        items={sliderMenu.filter((t) =>
+          areInArray(userData?.user?.role, ...t.roles)
+        )}
         onClick={async (info) => {
           dispatch(setSliderMenuItemSelectedKey(info.key));
           navigate(`/${info.key}`);

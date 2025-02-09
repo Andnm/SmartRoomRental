@@ -18,17 +18,7 @@ import {
   FaBus,
   FaChalkboardTeacher,
   FaUsers,
-} from "react-icons/fa";
-import {
-  MdShoppingCart,
-  MdLocalGroceryStore,
-  MdLocalLaundryService,
-  MdOutlineSecurity,
-  MdDirectionsTransit,
-} from "react-icons/md";
-import { AiOutlineApartment } from "react-icons/ai";
-import { toast } from "react-toastify";
-import {
+  FaHotel,
   FaChartPie,
   FaListUl,
   FaComments,
@@ -36,59 +26,93 @@ import {
   FaDollarSign,
   FaCrown,
 } from "react-icons/fa";
-import { ROLE_ADMIN } from "./constants";
+import {
+  MdShoppingCart,
+  MdLocalGroceryStore,
+  MdLocalLaundryService,
+  MdOutlineSecurity,
+  MdDirectionsTransit,
+  MdOutlineRequestPage,
+} from "react-icons/md";
 import { BiSolidUserAccount } from "react-icons/bi";
-import { MdOutlineFastfood, MdOutlineRequestPage } from "react-icons/md";
+import { AiOutlineApartment, AiOutlineDashboard } from "react-icons/ai";
+import { toast } from "react-toastify";
+import { ROLE_ADMIN } from "./constants";
 
-export function formatDateTimeVN(inputDate) {
-  const date = new Date(inputDate);
+export const formatCurrencyToVND = (input) => {
+  const amount = typeof input === "string" ? parseFloat(input) : input;
 
-  if (isNaN(date.getTime())) {
-    throw new Error("Invalid date format");
+  if (isNaN(amount)) {
+    throw new Error(
+      "Invalid input value. Please enter a number or string containing numbers."
+    );
   }
 
-  const hours = date.getUTCHours();
-  const minutes = date.getUTCMinutes();
+  const formattedAmount = amount.toLocaleString("vi-VN", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
 
-  const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
-    .toString()
-    .padStart(2, "0")}`;
+  return formattedAmount;
+};
 
-  const day = date.getUTCDate();
-  const month = date.getUTCMonth() + 1;
-  const year = date.getUTCFullYear();
+export function formatDateTimeVN(isoString) {
+  const date = new Date(isoString);
 
-  const formattedDate = `${day.toString().padStart(2, "0")}/${month
-    .toString()
-    .padStart(2, "0")}/${year}`;
+  const options = {
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour12: false,
+    timeZone: "Asia/Ho_Chi_Minh",
+  };
 
-  return `${formattedTime} | ${formattedDate}`;
+  const formatter = new Intl.DateTimeFormat("vi-VN", options);
+  const formattedParts = formatter.formatToParts(date);
+
+  const time = `${formattedParts.find((p) => p.type === "hour").value}:${
+    formattedParts.find((p) => p.type === "minute").value
+  }`;
+
+  const dateStr = `${formattedParts.find((p) => p.type === "day").value}/${
+    formattedParts.find((p) => p.type === "month").value
+  }/${formattedParts.find((p) => p.type === "year").value}`;
+
+  return `${time} | ${dateStr}`;
 }
 
 export const sliderMenu = [
   {
     key: "dashboard",
+    icon: <AiOutlineDashboard />,
+    label: "Thống kê",
+    roles: [ROLE_ADMIN],
+  },
+  {
+    key: "manage-user",
     icon: <BiSolidUserAccount />,
-    label: "Dashboard",
+    label: "Người dùng",
     roles: [ROLE_ADMIN],
   },
   {
     key: "manage-room",
-    icon: <MdOutlineFastfood />,
-    label: "Rooms",
+    icon: <FaHotel />,
+    label: "Phòng trọ",
     roles: [ROLE_ADMIN],
   },
   {
     key: "manage-transaction",
     icon: <MdOutlineRequestPage />,
-    label: "Transactions",
+    label: "Giao dịch",
     roles: [ROLE_ADMIN],
   },
 ];
 
-export const filterMenuByRole = (menu, roleId) => {
-  if (roleId === undefined) return [];
-  return menu.filter((item) => item.roles.includes(roleId));
+export const filterMenuByRole = (menu, role) => {
+  if (!role) return [];
+  return menu.filter((item) => item.roles.some((r) => r.name === role.name));
 };
 
 export const options_post_list = [

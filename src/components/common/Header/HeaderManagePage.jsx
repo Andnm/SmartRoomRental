@@ -14,8 +14,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../../../redux/selectors/selector";
 import { formatDateTimeVN, toastError } from "../../../utils/helpers";
 import { setSliderMenuItemSelectedKey } from "../../../redux/reducers/globalReducer";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/logo-remove-bg.png";
 import { logoutUser } from "../../../redux/reducers/userReducer";
+import { getCurrentUserThunk } from "../../../redux/actions/userThunk";
+import { ROLE_ADMIN, ROLE_CUSTOMER } from "../../../utils/constants";
 
 const HeaderManagePage = () => {
   const navigate = useNavigate();
@@ -28,6 +30,21 @@ const HeaderManagePage = () => {
   const [showNotification, setShowNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [newNotifyCount, setNewNotifyCount] = useState(0);
+
+  useEffect(() => {
+    const handleRelogin = async () => {
+      const token = await localStorage.getItem("accesstoken");
+      if (token !== "undefined") {
+        const getCurrentUserAction = await dispatch(getCurrentUserThunk());
+        if (getCurrentUserThunk.rejected.match(getCurrentUserAction)) {
+          console.log(
+            getCurrentUserAction.payload || getCurrentUserAction.error.message
+          );
+        } 
+      }
+    };
+    handleRelogin();
+  }, []);
 
   const handleLogout = () => {
     navigate("/");
@@ -106,7 +123,7 @@ const HeaderManagePage = () => {
     //   }
     // };
     // fetchNotifications();
-  }, [userData?.user.token, navigate.asPath]);
+  }, []);
 
   useEffect(() => {
     if (pathname) {
@@ -120,7 +137,7 @@ const HeaderManagePage = () => {
     // await seenNotification(noti);
     // switch (noti.noti_type) {
     //   case NotificationEnum.TO_ADMIN:
-    //     navigate.push("/admin/manage-order");
+    //     navigate("/manage-order");
     //     break;
     //   default:
     //     break;
@@ -141,7 +158,7 @@ const HeaderManagePage = () => {
             alt="logo"
             loading="lazy"
             onClick={() => {
-              navigate.push("/admin/manage-user");
+              navigate("/dashboard");
             }}
             className="cursor-pointer"
           />
@@ -159,7 +176,7 @@ const HeaderManagePage = () => {
             <Badge count={newNotifyCount}>
               <Avatar
                 className="bg-white hover:bg-[#e3eced]/50 flex justify-center items-center"
-                style={{ borderColor: "#ffa412" }}
+                style={{ borderColor: "#ffa412", backgroundColor: "white" }}
                 shape="circle"
                 icon={
                   <IoIosNotificationsOutline
@@ -255,7 +272,7 @@ const HeaderManagePage = () => {
 
           <div className="profile flex justify-between flex-row items-center">
             <div className="name text-center font-semibold text-base">
-              {userData?.user.name}
+              {userData?.user?.fullname || "Admin"}
             </div>
             <div className="icon-person flex justify-center items-center">
               <IoPersonCircleOutline className="w-7 h-7" />

@@ -33,6 +33,16 @@ export const PaymentMethodEnum = {
   WALLET: "wallet",
 };
 
+export const PaymentMethodAdminEnum = {
+  INTERNET_BANKING: "internet_banking",
+  WALLET: "vnpay",
+};
+
+export const PaymentMethodAdminName = {
+  [PaymentMethodAdminEnum.INTERNET_BANKING]: "Internet Banking",
+  [PaymentMethodAdminEnum.WALLET]: "VnPay",
+};
+
 export const PaymentMethodName = {
   [PaymentMethodEnum.INTERNET_BANKING]: "Internet Banking",
   [PaymentMethodEnum.WALLET]: "Tài khoản cá nhân",

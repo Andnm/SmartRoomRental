@@ -1,4 +1,3 @@
-"use client";
 
 import { Card, Form, Input, Button, message } from "antd";
 import React, { useRef, useState } from "react";

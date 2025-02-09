@@ -20,6 +20,9 @@ import AddFunds from "../pages/addFunds";
 import ForgotPassword from "../pages/forgotPassword/ForgotPassword";
 import Dashboard from "../pages/admin/Dashboard";
 import AdminLayout from "../components/layout/AdminLayout";
+import ManageRoom from "../pages/admin/ManageRoom";
+import ManageTransaction from "../pages/admin/ManageTransaction";
+import ManageUser from "../pages/admin/ManageUser";
 
 const Router = () => {
   return (
@@ -64,6 +67,9 @@ const Router = () => {
 
       <Route element={<AdminLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/manage-user" element={<ManageUser />} />
+        <Route path="/manage-room" element={<ManageRoom />} />
+        <Route path="/manage-transaction" element={<ManageTransaction />} />
       </Route>
       <Route path="/*" element={<NotFound />} />
     </Routes>

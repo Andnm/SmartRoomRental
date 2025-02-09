@@ -23,3 +23,12 @@ export const createUpMembershipByAccountBalance = async (data) => {
     throw error;
   }
 };
+
+export const getAllTransactionByAdmin = async () => {
+  try {
+    const response = await axiosInstance.get(`/api/transactions/admin`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

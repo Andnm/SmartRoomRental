@@ -8,11 +8,12 @@ import { toast } from "react-toastify";
 import { userSelector } from "../../redux/selectors/selector";
 import { Spin } from "antd";
 import { useNavigate } from "react-router-dom";
+import { ROLE_ADMIN, ROLE_CUSTOMER } from "../../utils/constants";
 
 const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(userSelector);
+  const userData = useSelector(userSelector);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -28,6 +29,7 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
         toast.error(response.payload || response.error.message);
       } else {
         const getCurrentUserAction = await dispatch(getCurrentUserThunk());
+
         if (getCurrentUserThunk.rejected.match(getCurrentUserAction)) {
           toast.error(response.payload || response.error.message);
         } else {
@@ -36,6 +38,19 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
             password: "",
           });
           triggerCancel();
+
+          const userRole = getCurrentUserAction?.payload?.role;
+
+          switch (userRole) {
+            case ROLE_ADMIN:
+              navigate("/dashboard");
+              break;
+            case ROLE_CUSTOMER:
+              navigate("/");
+              break;
+            default:
+              navigate("/");
+          }
         }
       }
     } catch (error) {

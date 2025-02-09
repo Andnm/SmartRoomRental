@@ -2,6 +2,7 @@ import { Layout, theme } from "antd";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import HeaderManagePage from "../../common/Header/HeaderManagePage";
+import SliderComponent from "../../slider/Slider";
 
 const { Content } = Layout;
 
@@ -14,7 +15,7 @@ function AdminLayout({ children }) {
     <Layout className="max-h-screen">
       <HeaderManagePage />
       <Layout>
-        {/* <SliderComponent /> */}
+        <SliderComponent />
         <Content
           style={{
             marginTop: "10px",

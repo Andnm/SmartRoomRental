@@ -1,6 +1,5 @@
 import { boardingCategories, housingCategoryTranslation } from "./constants";
 
-// Format price to include currency and commas (e.g., 1,000.00)
 export const formatPrice = (price) => {
   const numberString = String(price);
   const numberArray = numberString.split("");
@@ -12,7 +11,6 @@ export const formatPrice = (price) => {
   return formattedNumber;
 };
 
-// Format date to "dd-mm-yyyy"
 export const formatDate = (date) => {
   if (!(date instanceof Date)) date = new Date(date);
   if (isNaN(date)) return "Invalid date";
@@ -24,7 +22,6 @@ export const formatDate = (date) => {
   return `${day}-${month}-${year}`;
 };
 
-// Format time to "mm-hh"
 export const formatTime = (date) => {
   if (!(date instanceof Date)) date = new Date(date);
   if (isNaN(date)) return "Invalid time";
@@ -35,16 +32,27 @@ export const formatTime = (date) => {
   return `${minutes}-${hours}`;
 };
 
+export const areInArray = (arr, ...elements) => {
+  for (let element of elements) {
+    if (arr?.includes(element)) {
+      return true;
+    }
+  }
+  return false;
+};
 
 export const translateHousingCategory = (type) => {
   return housingCategoryTranslation[type] || "Không xác định";
 };
 
 export const getCategoryLabel = (category) => {
-  return boardingCategories.includes(category) ? "Phòng trọ" : "Nhà nguyên căn, chung cư";
+  return boardingCategories.includes(category)
+    ? "Phòng trọ"
+    : "Nhà nguyên căn, chung cư";
 };
 
-export const getRandomRating = () => (Math.random() * (5.0 - 4.0) + 4.0).toFixed(1);
+export const getRandomRating = () =>
+  (Math.random() * (5.0 - 4.0) + 4.0).toFixed(1);
 
 export const translateRank = (rank) => {
   const rankMap = {
@@ -57,3 +65,11 @@ export const translateRank = (rank) => {
   return rankMap[rank] || rank;
 };
 
+export const convertMembership = (actionType) => {
+  const actionMap = {
+    up_membership: "Nâng cấp hội viên",
+    add_funds: "Nạp tiền tài khoản",
+  };
+
+  return actionMap[actionType] || actionType; 
+};

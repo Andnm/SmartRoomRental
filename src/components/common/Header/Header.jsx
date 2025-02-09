@@ -12,7 +12,7 @@ import { userSelector } from "../../../redux/selectors/selector";
 import { logoutUser } from "../../../redux/reducers/userReducer";
 import { generateFallbackAvatar } from "../../../utils/helpers";
 import { getCurrentUserThunk } from "../../../redux/actions/userThunk";
-import { menuItemsHeader } from "../../../utils/constants";
+import { menuItemsHeader, ROLE_ADMIN, ROLE_CUSTOMER } from "../../../utils/constants";
 import { FaUser } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
 import { RiLogoutBoxRLine } from "react-icons/ri";
@@ -34,6 +34,19 @@ function Header() {
           console.log(
             getCurrentUserAction.payload || getCurrentUserAction.error.message
           );
+        } else {
+          const userRole = getCurrentUserAction?.payload?.role;
+
+          switch (userRole) {
+            case ROLE_ADMIN:
+              navigate("/dashboard");
+              break;
+            case ROLE_CUSTOMER:
+              navigate("/");
+              break;
+            default:
+              navigate("/");
+          }
         }
       }
     };
@@ -50,7 +63,7 @@ function Header() {
   };
 
   const handleLogout = () => {
-    navigate("/")
+    navigate("/");
     dispatch(logoutUser());
   };
 

@@ -1,4 +1,3 @@
-"use client";
 
 import React, { useState } from "react";
 import { GrSecure } from "react-icons/gr";
