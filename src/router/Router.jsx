@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "../pages/home/Home";
-import Dashboard from "../pages/dashboard/Dashboard";
 import NotFound from "../pages/notFound/NotFound";
 import AuthLayout from "../components/layout/AuthLayout/AuthLayout";
 import BoardingList from "../pages/boarding/BoardingList";
@@ -19,7 +18,8 @@ import Pricing from "../pages/innkeeper/Pricing";
 import History from "../pages/innkeeper/History";
 import AddFunds from "../pages/addFunds";
 import ForgotPassword from "../pages/forgotPassword/ForgotPassword";
-
+import Dashboard from "../pages/admin/Dashboard";
+import AdminLayout from "../components/layout/AdminLayout";
 
 const Router = () => {
   return (
@@ -32,13 +32,24 @@ const Router = () => {
 
       <Route element={<AuthLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/boarding" element={<BoardingList />} />
         <Route path="/boarding/:id" element={<BoardingDetail />} />
-        <Route path="/apartment-fullhouse" element={<ApartmentFullhouseList />} />
-        <Route path="/apartment-fullhouse/:id" element={<ApartmentFullHouseDetail />} />
-        <Route path="/looking-for-roommates" element={<LookingForRoommatesList />} />
-        <Route path="/looking-for-roommates/:id" element={<LookingForRoommatesDetail />} />
+        <Route
+          path="/apartment-fullhouse"
+          element={<ApartmentFullhouseList />}
+        />
+        <Route
+          path="/apartment-fullhouse/:id"
+          element={<ApartmentFullHouseDetail />}
+        />
+        <Route
+          path="/looking-for-roommates"
+          element={<LookingForRoommatesList />}
+        />
+        <Route
+          path="/looking-for-roommates/:id"
+          element={<LookingForRoommatesDetail />}
+        />
         <Route path="/account" element={<Account />} />
         <Route path="/account/change-password" element={<ChangePassword />} />
         <Route path="/innkeeper" element={<Innkeeper />} />
@@ -49,7 +60,10 @@ const Router = () => {
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/addfunds" element={<AddFunds />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+      </Route>
 
+      <Route element={<AdminLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
       </Route>
       <Route path="/*" element={<NotFound />} />
     </Routes>

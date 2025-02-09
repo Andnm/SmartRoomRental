@@ -20,6 +20,9 @@ import diamond_membership_bg from "../assets/images/diamon_membership_bg.png";
 import gold_membership_bg from "../assets/images/gold_membership_bg.png";
 import silver_membership_bg from "../assets/images/silver_membership_bg.png";
 
+export const ROLE_ADMIN = "Admin";
+export const ROLE_CUSTOMER = "Customer";
+
 export const TransactionTypeEnum = {
   AddFunds: "AddFunds",
   UpMembership: "UpMembership",

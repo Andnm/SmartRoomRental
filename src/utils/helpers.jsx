@@ -1,9 +1,95 @@
 import React, { useEffect } from "react";
-import { FaUserGraduate, FaBriefcase, FaHome, FaHeart, FaStore, FaHospital, FaTree, FaWifi, FaToilet, FaShower, FaUtensils, FaTshirt, FaSnowflake, FaBed, FaCar, FaBus, FaChalkboardTeacher, FaUsers } from "react-icons/fa";
-import { MdShoppingCart, MdLocalGroceryStore, MdLocalLaundryService, MdOutlineSecurity, MdDirectionsTransit } from "react-icons/md";
+import {
+  FaUserGraduate,
+  FaBriefcase,
+  FaHome,
+  FaHeart,
+  FaStore,
+  FaHospital,
+  FaTree,
+  FaWifi,
+  FaToilet,
+  FaShower,
+  FaUtensils,
+  FaTshirt,
+  FaSnowflake,
+  FaBed,
+  FaCar,
+  FaBus,
+  FaChalkboardTeacher,
+  FaUsers,
+} from "react-icons/fa";
+import {
+  MdShoppingCart,
+  MdLocalGroceryStore,
+  MdLocalLaundryService,
+  MdOutlineSecurity,
+  MdDirectionsTransit,
+} from "react-icons/md";
 import { AiOutlineApartment } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { FaChartPie, FaListUl, FaComments, FaHistory, FaDollarSign, FaCrown } from "react-icons/fa";
+import {
+  FaChartPie,
+  FaListUl,
+  FaComments,
+  FaHistory,
+  FaDollarSign,
+  FaCrown,
+} from "react-icons/fa";
+import { ROLE_ADMIN } from "./constants";
+import { BiSolidUserAccount } from "react-icons/bi";
+import { MdOutlineFastfood, MdOutlineRequestPage } from "react-icons/md";
+
+export function formatDateTimeVN(inputDate) {
+  const date = new Date(inputDate);
+
+  if (isNaN(date.getTime())) {
+    throw new Error("Invalid date format");
+  }
+
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+
+  const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")}`;
+
+  const day = date.getUTCDate();
+  const month = date.getUTCMonth() + 1;
+  const year = date.getUTCFullYear();
+
+  const formattedDate = `${day.toString().padStart(2, "0")}/${month
+    .toString()
+    .padStart(2, "0")}/${year}`;
+
+  return `${formattedTime} | ${formattedDate}`;
+}
+
+export const sliderMenu = [
+  {
+    key: "dashboard",
+    icon: <BiSolidUserAccount />,
+    label: "Dashboard",
+    roles: [ROLE_ADMIN],
+  },
+  {
+    key: "manage-room",
+    icon: <MdOutlineFastfood />,
+    label: "Rooms",
+    roles: [ROLE_ADMIN],
+  },
+  {
+    key: "manage-transaction",
+    icon: <MdOutlineRequestPage />,
+    label: "Transactions",
+    roles: [ROLE_ADMIN],
+  },
+];
+
+export const filterMenuByRole = (menu, roleId) => {
+  if (roleId === undefined) return [];
+  return menu.filter((item) => item.roles.includes(roleId));
+};
 
 export const options_post_list = [
   {
@@ -37,7 +123,7 @@ export const iconMap = {
     "Cặp đôi": <FaHeart />,
   },
   environments: {
-    "Chợ": <FaStore />,
+    Chợ: <FaStore />,
     "Siêu thị": <MdShoppingCart />,
     "Bệnh viện": <FaHospital />,
     "Công viên": <FaTree />,
@@ -46,7 +132,7 @@ export const iconMap = {
     "Bến xe bus": <FaBus />,
   },
   utilities: {
-    "Wifi": <FaWifi />,
+    Wifi: <FaWifi />,
     "Vệ sinh trong": <FaToilet />,
     "Phòng tắm": <FaShower />,
     "Kệ bếp": <FaUtensils />,
@@ -70,15 +156,21 @@ const IconComponent = ({ category, name }) => {
   );
 };
 
-export const ObjectIcon = ({ name }) => <IconComponent category="objects" name={name} />;
-export const EnvironmentIcon = ({ name }) => <IconComponent category="environments" name={name} />;
-export const UtilityIcon = ({ name }) => <IconComponent category="utilities" name={name} />;
+export const ObjectIcon = ({ name }) => (
+  <IconComponent category="objects" name={name} />
+);
+export const EnvironmentIcon = ({ name }) => (
+  <IconComponent category="environments" name={name} />
+);
+export const UtilityIcon = ({ name }) => (
+  <IconComponent category="utilities" name={name} />
+);
 
 export function useScrollToTop() {
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }, []);
 }
@@ -102,9 +194,7 @@ export const handleLowerCaseNonAccentVietnamese = (str) => {
   return str;
 };
 
-export const generateFallbackAvatar = (
-  fullname
-) => {
+export const generateFallbackAvatar = (fullname) => {
   const fallbackColor = "#FF9966";
 
   const initials = handleLowerCaseNonAccentVietnamese(
