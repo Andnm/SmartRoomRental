@@ -56,3 +56,4 @@ export const translateRank = (rank) => {
 
   return rankMap[rank] || rank;
 };
+

@@ -16,6 +16,56 @@ import news_1 from "../assets/images/news_1.png";
 import news_2 from "../assets/images/news_2.png";
 import news_3 from "../assets/images/news_3.png";
 import news_4 from "../assets/images/news_4.png";
+import diamond_membership_bg from "../assets/images/diamon_membership_bg.png";
+import gold_membership_bg from "../assets/images/gold_membership_bg.png";
+import silver_membership_bg from "../assets/images/silver_membership_bg.png";
+
+export const TransactionTypeEnum = {
+  AddFunds: "AddFunds",
+  UpMembership: "UpMembership",
+};
+
+export const PaymentMethodEnum = {
+  INTERNET_BANKING: "internetBanking",
+  WALLET: "wallet",
+};
+
+export const PaymentMethodName = {
+  [PaymentMethodEnum.INTERNET_BANKING]: "Internet Banking",
+  [PaymentMethodEnum.WALLET]: "Tài khoản cá nhân",
+};
+
+export const validMemberships = ["Silver", "Gold", "Diamond"];
+
+export const list_options_membership = [
+  {
+    img_link: silver_membership_bg,
+    membership: "Silver",
+    name: "Gói bạc",
+    price: 500000,
+    raise_news: "15 HOT",
+    refresh_news: "10 lần",
+    duration: "30 ngày",
+  },
+  {
+    img_link: gold_membership_bg,
+    membership: "Gold",
+    name: "Gói vàng",
+    price: 800000,
+    raise_news: "10 VIP",
+    refresh_news: "15 lần",
+    duration: "30 ngày",
+  },
+  {
+    img_link: diamond_membership_bg,
+    membership: "Diamond",
+    name: "Gói kim cương",
+    price: 1000000,
+    raise_news: "30 VIP - HOT",
+    refresh_news: "30 lần",
+    duration: "30 ngày",
+  },
+];
 
 export const menuItemsHeader = [
   { name: "Phòng trọ", to: "/boarding" },
@@ -211,8 +261,7 @@ export const rooms_sample = [
   },
   {
     id: 4,
-    title:
-      "Cần tìm nữ ở ghép phòng cực đẹp tại 143 Hoàng Hoa Thám, Phường 13",
+    title: "Cần tìm nữ ở ghép phòng cực đẹp tại 143 Hoàng Hoa Thám, Phường 13",
     type: "looking_for_roommates",
     price: 6500000,
     category: "Apartment",
@@ -233,8 +282,7 @@ export const rooms_sample = [
       "Bãi để xe riêng",
       "Camera an ninh",
     ],
-    address:
-      "143 Hoàng Hoa Thám, Phường 13, Thành phố Hồ Chí Minh",
+    address: "143 Hoàng Hoa Thám, Phường 13, Thành phố Hồ Chí Minh",
     img_links: [
       "https://cdn.chotot.com/PUbgZCS9vR2QsfjRDU_jy7EU7vhaPbLVcoNz8LcfMhI/preset:view/plain/76a8abab8f241783ce7a2d2d45e72a80-2895418999997961399.jpg",
       "https://cdn.chotot.com/J5qKEKm2lfZRTJ_d7o1JqGq6sP6WBCcriP4hCuSQKGI/preset:view/plain/f8c1ed87576f918ef85fade886201477-2895419000374215478.jpg",
@@ -479,8 +527,7 @@ export const rooms_sample = [
       "Bãi để xe riêng",
       "Camera an ninh",
     ],
-    address:
-      "234 Nguyễn Tri Phương, Phường 4, Quận 10, Thành phố Hồ Chí Minh",
+    address: "234 Nguyễn Tri Phương, Phường 4, Quận 10, Thành phố Hồ Chí Minh",
     img_links: [
       "https://cdn.chotot.com/PUbgZCS9vR2QsfjRDU_jy7EU7vhaPbLVcoNz8LcfMhI/preset:view/plain/76a8abab8f241783ce7a2d2d45e72a80-2895418999997961399.jpg",
       "https://cdn.chotot.com/J5qKEKm2lfZRTJ_d7o1JqGq6sP6WBCcriP4hCuSQKGI/preset:view/plain/f8c1ed87576f918ef85fade886201477-2895419000374215478.jpg",
@@ -496,7 +543,7 @@ export const rooms_sample = [
     contact_email: "haianh@gmail.com",
     contact_address: "123 Main St, City Center",
   },
-   {
+  {
     id: 11,
     title:
       "Studio full nội thất số 12/4/6C Nguyễn Cảnh Dị, Phường 4, Quận Tân Bình",

@@ -50,6 +50,7 @@ function Header() {
   };
 
   const handleLogout = () => {
+    navigate("/")
     dispatch(logoutUser());
   };
 

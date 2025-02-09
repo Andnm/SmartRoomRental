@@ -17,6 +17,7 @@ import ManageBoarding from "../pages/innkeeper/ManageBoarding";
 import Membership from "../pages/innkeeper/Membership";
 import Pricing from "../pages/innkeeper/Pricing";
 import History from "../pages/innkeeper/History";
+import AddFunds from "../pages/addFunds";
 
 
 const Router = () => {
@@ -45,6 +46,7 @@ const Router = () => {
         <Route path="/membership" element={<Membership />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/reviews" element={<Reviews />} />
+        <Route path="/addfunds" element={<AddFunds />} />
 
       </Route>
       <Route path="/*" element={<NotFound />} />

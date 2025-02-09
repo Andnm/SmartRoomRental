@@ -1,9 +1,24 @@
 import React, { useEffect } from "react";
-import { FaUserGraduate, FaBriefcase, FaHome, FaHeart, FaStore, FaHospital, FaTree, FaWifi, FaToilet, FaShower, FaUtensils, FaTshirt, FaSnowflake, FaBed, FaCar, FaBus, FaChalkboardTeacher } from "react-icons/fa";
+import { FaUserGraduate, FaBriefcase, FaHome, FaHeart, FaStore, FaHospital, FaTree, FaWifi, FaToilet, FaShower, FaUtensils, FaTshirt, FaSnowflake, FaBed, FaCar, FaBus, FaChalkboardTeacher, FaUsers } from "react-icons/fa";
 import { MdShoppingCart, MdLocalGroceryStore, MdLocalLaundryService, MdOutlineSecurity, MdDirectionsTransit } from "react-icons/md";
 import { AiOutlineApartment } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { FaChartPie, FaListUl, FaComments, FaHistory, FaDollarSign, FaCrown } from "react-icons/fa";
+
+export const options_post_list = [
+  {
+    name: "Phòng trọ",
+    des: "Chỗ ở sạch sẽ, an ninh, giá hợp lý, thích hợp cho sinh viên và người đi làm.",
+    link: "",
+    icon: <FaHome size={80} color="#1E40AF" />,
+  },
+  {
+    name: "Tìm bạn ở ghép",
+    des: "Tìm bạn ở ghép, chung cư sạch đẹp, an ninh tốt...",
+    link: "",
+    icon: <FaUsers size={80} color="#1E40AF" />,
+  },
+];
 
 export const innkeeper_menu = [
   { name: "Thông tin chung", icon: <FaChartPie />, path: "/innkeeper" },
@@ -106,4 +121,15 @@ export const generateFallbackAvatar = (
   `;
   const dataUrl = `data:image/svg+xml;base64,${btoa(svgString)}`;
   return dataUrl;
+};
+
+export const toastError = (error) => {
+  const messages = error?.response?.data?.message;
+
+  if (Array.isArray(messages)) {
+    const combinedMessage = messages.join("\n");
+    toast.error(combinedMessage);
+  } else {
+    toast.error(messages || error.message || "An error occurred");
+  }
 };

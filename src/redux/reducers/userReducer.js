@@ -19,6 +19,16 @@ const userSlice = createSlice({
     updateUser: (state, action) => {
       state.user = action.payload;
     },
+    updateMembershipUser: (state, action) => {
+      if (state.user) {
+        state.user.membership = action.payload.membership;
+      }
+    },
+    updateAccountBalanceUser: (state, action) => {
+      if (state.user) {
+        state.user.account_balance = action.payload.account_balance;
+      }
+    },
     removeUser: (state) => {
       state.user = null;
     },
@@ -87,5 +97,11 @@ const userSlice = createSlice({
   },
 });
 
-export const { updateUser, removeUser, logoutUser } = userSlice.actions;
+export const {
+  updateUser,
+  removeUser,
+  logoutUser,
+  updateMembershipUser,
+  updateAccountBalanceUser,
+} = userSlice.actions;
 export default userSlice.reducer;
