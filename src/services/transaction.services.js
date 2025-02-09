@@ -6,7 +6,7 @@ export const createUpMembershipByPayOs = async (membership, amount) => {
       `/api/payOs/create_up_membership/${membership}`,
       amount
     );
-    return response;
+    return response.data;
   } catch (error) {
     throw error;
   }

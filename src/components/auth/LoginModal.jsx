@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { userSelector } from "../../redux/selectors/selector";
 import { Spin } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(userSelector);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -88,7 +90,19 @@ const LoginModal = ({ setIsLoginModal, triggerCancel }) => {
             </button>
           </div>
 
-          <div className="mb-2 mt-10">
+          <div className="flex justify-end cursor-pointer">
+            <p
+              className="hover:underline"
+              onClick={() => {
+                navigate("/forgot-password");
+                triggerCancel();
+              }}
+            >
+              Quên mật khẩu?
+            </p>
+          </div>
+
+          <div className="mb-2 mt-5">
             <button
               className={`cursor-pointer w-full bg-blue-800 text-white py-4 font-semibold hover:bg-blue-900 disabled:bg-gray-400 ${
                 isLoading ? "disabled:cursor-wait" : ""
