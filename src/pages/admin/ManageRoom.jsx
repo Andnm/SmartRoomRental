@@ -74,10 +74,12 @@ const ManageRoom = () => {
         setIsLoading(true);
         try {
           const responseGetAllItem = await getAllRooms();
-          
+
           const sortedData = [...responseGetAllItem].sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
           );
+
+          console.log("responseGetAllItem: ", responseGetAllItem);
 
           setOriginalData(sortedData);
           setProcessingData(sortedData);
@@ -169,20 +171,23 @@ const ManageRoom = () => {
     }
     setIsLoadingAction(true);
     try {
-      await rejectRoomForAdmin(selectedItem._id, rejectReason);
+      const data = {
+        reason_rejected: rejectReason,
+      };
+      await rejectRoomForAdmin(selectedItem._id, "rejected", data);
       toast.success("Phòng đã bị từ chối!");
 
       setOriginalData((prevData) =>
         prevData.map((room) =>
           room._id === selectedItem._id
-            ? { ...room, status: "inactive", reason_rejected: rejectReason }
+            ? { ...room, status: "rejected", reason_rejected: rejectReason }
             : room
         )
       );
       setProcessingData((prevData) =>
         prevData.map((room) =>
           room._id === selectedItem._id
-            ? { ...room, status: "inactive", reason_rejected: rejectReason }
+            ? { ...room, status: "rejected", reason_rejected: rejectReason }
             : room
         )
       );
@@ -190,7 +195,9 @@ const ManageRoom = () => {
       setIsRejectModalVisible(false);
       setIsDetailModalVisible(false);
     } catch (error) {
+      console.log("error: ", error);
       toast.error("Có lỗi xảy ra khi từ chối!");
+      toast.error(error?.response?.data);
     } finally {
       setIsLoadingAction(false);
     }
@@ -253,6 +260,11 @@ const ManageRoom = () => {
             bgColor: "oklch(0.946 0.033 307.174)",
             label: "Đang chờ duyệt",
           },
+          rejected: {
+            color: "oklch(0.444 0.177 26.899)",
+            bgColor: "oklch(0.885 0.062 18.334)",
+            label: "Bị từ chối",
+          }
         };
 
         const { color, bgColor, label } =
@@ -489,35 +501,30 @@ const ManageRoom = () => {
               <strong>Trạng thái:</strong>
               <span
                 className={`ml-2 px-3 py-1 text-sm rounded-md 
-            ${
-              selectedItem.status === "active"
-                ? "bg-green-200 text-green-700"
-                : ""
-            }
-            ${
-              selectedItem.status === "inactive"
-                ? "bg-gray-200 text-gray-700"
-                : ""
-            }
-            ${
-              selectedItem.status === "under_review"
-                ? "bg-purple-100 text-purple-800"
-                : ""
-            }`}
+      ${selectedItem.status === "active" ? "bg-green-200 text-green-700" : ""}
+      ${selectedItem.status === "inactive" ? "bg-gray-200 text-gray-700" : ""}
+      ${
+        selectedItem.status === "under_review"
+          ? "bg-purple-100 text-purple-800"
+          : ""
+      }
+      ${selectedItem.status === "rejected" ? "bg-red-100 text-red-800" : ""}`}
               >
                 {selectedItem.status === "active"
                   ? "Đang hiệu lực"
                   : selectedItem.status === "inactive"
                   ? "Hết hiệu lực"
-                  : "Đang chờ duyệt"}
+                  : selectedItem.status === "under_review"
+                  ? "Đang chờ duyệt"
+                  : "Bị từ chối"}
               </span>
             </div>
 
-            {selectedItem.status === "under_review" &&
+            {selectedItem.status === "rejected" &&
               selectedItem.reason_rejected && (
                 <div className="p-3 border border-red-300 bg-red-100 rounded-md">
-                  <strong className="text-red-600">Lý do từ chối:</strong>
-                  <p className="text-red-600">{selectedItem.reason_rejected}</p>
+                  <strong className="text-red-800">Lý do từ chối:</strong>
+                  <p className="text-red-800">{selectedItem.reason_rejected}</p>
                 </div>
               )}
           </div>

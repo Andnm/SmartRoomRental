@@ -47,10 +47,15 @@ export const approveRoomForAdmin = async (room_id, room_status) => {
   }
 };
 
-export const rejectRoomForAdmin = async (room_id, room_status) => {
+export const rejectRoomForAdmin = async (
+  room_id,
+  room_status,
+  reject_reason
+) => {
   try {
     const response = await axiosInstance.put(
-      `/api/rooms/admin/status/${room_id}/${room_status}`
+      `/api/rooms/admin/status/${room_id}/${room_status}`,
+      reject_reason
     );
     return response.data;
   } catch (error) {
