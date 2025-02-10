@@ -3,10 +3,21 @@ import banner_img from "../../assets/images/banner.png";
 import { FaDollarSign, FaFilter, FaStar } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
-import { hot_news, introduction, provinces_outstanding, quantity_provinces_dorn, rooms_carousel, rooms_sample } from "../../utils/constants";
+import {
+  hot_news,
+  introduction,
+  provinces_outstanding,
+  quantity_provinces_dorn,
+  rooms_carousel,
+  rooms_sample,
+} from "../../utils/constants";
 import RoomCard from "../../components/room/roomCard/RoomCard";
 import { Carousel } from "antd";
-import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle, IoMdHeart } from "react-icons/io";
+import {
+  IoIosArrowDropleftCircle,
+  IoIosArrowDroprightCircle,
+  IoMdHeart,
+} from "react-icons/io";
 import { getRandomRating } from "../../utils/common";
 
 function Home() {
@@ -17,7 +28,15 @@ function Home() {
 
   const displayedRooms = filteredRooms.slice(0, 8);
 
-  const list_provinces = ["Tất cả", "Hồ Chí Minh", "Hà Nội", "Đà Nẵng", "Thừa Thiên Huế", "Bình Dương", "Hà Giang"]
+  const list_provinces = [
+    "Tất cả",
+    "Hồ Chí Minh",
+    "Hà Nội",
+    "Đà Nẵng",
+    "Thừa Thiên Huế",
+    "Bình Dương",
+    "Hà Giang",
+  ];
 
   return (
     <div className="home-page light-gray-background relative">
@@ -28,14 +47,18 @@ function Home() {
       >
         <div className="container relative">
           <div className="absolute top-20 left-0 transform text-white">
-            <h1 className="text-4xl font-bold uppercase">Tìm nhanh, kiếm dễ<br />Trọ Mới toàn quốc</h1>
+            <h1 className="text-4xl font-bold uppercase">
+              Tìm nhanh, kiếm dễ
+              <br />
+              Trọ Mới toàn quốc
+            </h1>
             <p className="mt-4 text-lg font-thin">
-              Trang thông tin và cho thuê phòng trọ nhanh chóng, hiệu quả với<br />
+              Trang thông tin và cho thuê phòng trọ nhanh chóng, hiệu quả với
+              <br />
               hơn 500 tin đăng mới và 30.000 lượt xem mỗi ngày
             </p>
           </div>
         </div>
-
       </div>
 
       {/* filter */}
@@ -44,19 +67,31 @@ function Home() {
           <div className="flex items-center">
             <div className="flex space-x-1 mt-4">
               <button
-                className={`cursor-pointer py-2 px-4 rounded-tl-lg rounded-tr-lg font-semibold ${activeTab === "all" ? "bg-blue-800 text-white" : "bg-white text-blue-900"}`}
+                className={`cursor-pointer py-2 px-4 rounded-tl-lg rounded-tr-lg font-semibold ${
+                  activeTab === "all"
+                    ? "bg-blue-800 text-white"
+                    : "bg-white text-blue-900"
+                }`}
                 onClick={() => setActiveTab("all")}
               >
                 Tất cả
               </button>
               <button
-                className={`cursor-pointer py-2 px-4 rounded-tl-lg rounded-tr-lg font-semibold ${activeTab === "room" ? "bg-blue-800 text-white" : "bg-white text-blue-900"}`}
+                className={`cursor-pointer py-2 px-4 rounded-tl-lg rounded-tr-lg font-semibold ${
+                  activeTab === "room"
+                    ? "bg-blue-800 text-white"
+                    : "bg-white text-blue-900"
+                }`}
                 onClick={() => setActiveTab("room")}
               >
                 Phòng trọ
               </button>
               <button
-                className={`cursor-pointer py-2 px-4 rounded-tl-lg rounded-tr-lg font-semibold ${activeTab === "house" ? "bg-blue-800 text-white" : "bg-white text-blue-900"}`}
+                className={`cursor-pointer py-2 px-4 rounded-tl-lg rounded-tr-lg font-semibold ${
+                  activeTab === "house"
+                    ? "bg-blue-800 text-white"
+                    : "bg-white text-blue-900"
+                }`}
                 onClick={() => setActiveTab("house")}
               >
                 Nhà nguyên căn, chung cư
@@ -65,7 +100,10 @@ function Home() {
           </div>
 
           <div className="flex items-center ">
-            <div className="bg-blue-800 p-5 rounded-br-lg rounded-tr-lg rounded-bl-lg flex space-x-3 justify-center" style={{ width: "1240px" }}>
+            <div
+              className="bg-blue-800 p-5 rounded-br-lg rounded-tr-lg rounded-bl-lg flex space-x-3 justify-center"
+              style={{ width: "1240px" }}
+            >
               <div className="flex items-center bg-white rounded-bl-full rounded-tl-full rounded-br-md rounded-br-md px-4 relative">
                 <div
                   className="absolute -left-1 w-14 h-14 flex items-center justify-center bg-[#00b7ff] shadow-lg rounded-full text-white hover:bg-[#009ace] cursor-pointer"
@@ -75,9 +113,13 @@ function Home() {
                 </div>
                 <div className="w-8 h-0"></div>
 
-                <input type="text" placeholder="Nhập phòng trọ,..." className="p-2 
+                <input
+                  type="text"
+                  placeholder="Nhập phòng trọ,..."
+                  className="p-2 
                 rounded-md
-                 outline-none  w-46" />
+                 outline-none  w-46"
+                />
               </div>
 
               <div className="flex items-center bg-white rounded-md px-4 py-1">
@@ -111,11 +153,9 @@ function Home() {
         </div>
       </div>
 
-
       {/* MAIN CONTENT */}
       {/* ////////////////// */}
-      <div className="mt-20">
-      </div>
+      <div className="mt-20"></div>
 
       {/* list rooms vip */}
       <div className="container">
@@ -126,14 +166,20 @@ function Home() {
 
           <div className="flex flex-wrap gap-4 justify-between ">
             {displayedRooms.map((room, index) => (
-              <RoomCard key={index} room={room} is_hot={false} />
+              <RoomCard
+                key={index}
+                room={room}
+                is_hot={false}
+                can_navigate={true}
+                show_status={false}
+              />
             ))}
           </div>
 
           {filteredRooms.length > 8 && (
             <button
               className="cursor-pointer mt-4 px-6 py-3 border-2 border-blue-800 text-blue-800 font-bold rounded-md hover:bg-blue-100 flex items-center"
-              onClick={() => { }}
+              onClick={() => {}}
             >
               Xem tất cả <span className="ml-2">→</span>
             </button>
@@ -143,7 +189,9 @@ function Home() {
 
       {/* experience-dorn */}
       <div className="experience-dorn my-8 p-8">
-        <h2 className="uppercase text-white font-semibold text-center text-xl">Trải nghiệm trọ mới tại các tỉnh thành</h2>
+        <h2 className="uppercase text-white font-semibold text-center text-xl">
+          Trải nghiệm trọ mới tại các tỉnh thành
+        </h2>
 
         <div className="flex justify-center gap-4 my-6">
           {list_provinces.map((item, index) => (
@@ -160,8 +208,12 @@ function Home() {
           <Carousel
             dots={false}
             arrows
-            prevArrow={<IoIosArrowDropleftCircle className="text-blue-800" size={20} />}
-            nextArrow={<IoIosArrowDroprightCircle className="text-blue-800" size={20} />}
+            prevArrow={
+              <IoIosArrowDropleftCircle className="text-blue-800" size={20} />
+            }
+            nextArrow={
+              <IoIosArrowDroprightCircle className="text-blue-800" size={20} />
+            }
             speed={400}
             slidesToShow={4}
             slidesToScroll={1}
@@ -172,9 +224,7 @@ function Home() {
           >
             {rooms_carousel.map((room) => (
               <div className="" key={room.id}>
-                <div
-                  className="bg-white rounded-md text-black p-1 shadow-md hover:shadow-lg transition duration-300 mx-2"
-                >
+                <div className="bg-white rounded-md text-black p-1 shadow-md hover:shadow-lg transition duration-300 mx-2">
                   <img
                     src={room.img_links[0]}
                     alt={room.title}
@@ -182,9 +232,12 @@ function Home() {
                   />
 
                   <div className="px-2">
-                    <div className='flex items-center mt-1'>
+                    <div className="flex items-center mt-1">
                       <IoLocationSharp className="mr-1 text-black" size={25} />
-                      <p className="text-black text-xs truncate" title={room.address}>
+                      <p
+                        className="text-black text-xs truncate"
+                        title={room.address}
+                      >
                         {room.address}
                       </p>
                     </div>
@@ -193,7 +246,12 @@ function Home() {
                       {room.title}
                     </h3>
 
-                    <p className="text-md mt-1 text-gray-400">Từ: <span className='font-semibold text-orange-500'>{room.price.toLocaleString()} VND</span></p>
+                    <p className="text-md mt-1 text-gray-400">
+                      Từ:{" "}
+                      <span className="font-semibold text-orange-500">
+                        {room.price.toLocaleString()} VND
+                      </span>
+                    </p>
 
                     <div className="flex justify-between items-center mb-4 mt-2">
                       <div className="cursor-pointer rounded-md flex justify-center items-center gap-1 bg-gray-100 p-2">
@@ -202,7 +260,10 @@ function Home() {
                       </div>
 
                       <div className="">
-                        <IoMdHeart className="cursor-pointer text-gray-400" size={25} />
+                        <IoMdHeart
+                          className="cursor-pointer text-gray-400"
+                          size={25}
+                        />
                       </div>
                     </div>
                   </div>
@@ -215,7 +276,7 @@ function Home() {
         <div className="flex justify-center">
           <button
             className="cursor-pointer mt-4 px-6 py-3 bg-white text-blue-800 font-bold rounded-md flex items-center transition duration-300 hover:bg-blue-400 hover:text-white hover:shadow-md"
-            onClick={() => { }}
+            onClick={() => {}}
           >
             Xem thêm nhiều hơn
           </button>
@@ -231,14 +292,20 @@ function Home() {
 
           <div className="flex flex-wrap gap-4 justify-between ">
             {displayedRooms.map((room, index) => (
-              <RoomCard key={index} room={room} is_hot={true} />
+              <RoomCard
+                key={index}
+                room={room}
+                is_hot={true}
+                can_navigate={true}
+                show_status={false}
+              />
             ))}
           </div>
 
           {filteredRooms.length > 8 && (
             <button
               className="cursor-pointer mt-4 px-6 py-3 border-2 border-blue-800 text-blue-800 font-bold rounded-md hover:bg-blue-100 flex items-center"
-              onClick={() => { }}
+              onClick={() => {}}
             >
               Xem tất cả <span className="ml-2">→</span>
             </button>
@@ -270,13 +337,13 @@ function Home() {
             </div>
           ))}
         </div>
-
       </div>
 
       {/* introduction */}
       <div className="container py-6 bg-white">
         <h2 className="text-2xl font-bold text-blue-800 mb-6 uppercase text-center">
-          Hơn <span className="text-blue-400">50.000</span> chủ trọ tin tưởng trọ mới
+          Hơn <span className="text-blue-400">50.000</span> chủ trọ tin tưởng
+          trọ mới
         </h2>
 
         <div className="grid grid-cols-3 gap-10 cursor-pointer">
@@ -284,7 +351,6 @@ function Home() {
             <div
               key={index}
               className="flex flex-col justify-between rounded-lg bg-white p-10 pb-0"
-
             >
               <div className="w-full flex justify-center items-center rounded-t-lg mb-4">
                 <img
@@ -293,11 +359,12 @@ function Home() {
                   className="w-42 h-50 object-cover rounded-t-lg"
                 />
               </div>
-              <h3 className=" text-center font-semibold px-4 h-20">{province.title}</h3>
+              <h3 className=" text-center font-semibold px-4 h-20">
+                {province.title}
+              </h3>
             </div>
           ))}
         </div>
-
       </div>
 
       <div className="mt-10"></div>
@@ -307,7 +374,10 @@ function Home() {
         <h2 className="text-2xl font-bold text-blue-800 uppercase">
           Khám phá trọ được yêu thích ở các tỉnh thành
         </h2>
-        <p className="text-gray-400">Dưới đây là tổng hợp các tỉnh thành có nhiều trọ mới và được quan tâm nhất</p>
+        <p className="text-gray-400">
+          Dưới đây là tổng hợp các tỉnh thành có nhiều trọ mới và được quan tâm
+          nhất
+        </p>
 
         <div className="grid grid-cols-5 gap-4 cursor-pointer mt-6">
           {quantity_provinces_dorn.map((item, index) => (
@@ -317,7 +387,6 @@ function Home() {
             </div>
           ))}
         </div>
-
       </div>
 
       {/* hot news */}
@@ -342,17 +411,17 @@ function Home() {
               />
 
               <div className="flex flex-row px-2 py-2 items-center">
-                <p className="text-2xl font-bold text-gray-500">{index < 10 ? `0${index + 1}` : index + 1}</p>
-                <h3 className="text-lg font-semibold px-4 line-clamp-2">{news_item.title}</h3>
+                <p className="text-2xl font-bold text-gray-500">
+                  {index < 10 ? `0${index + 1}` : index + 1}
+                </p>
+                <h3 className="text-lg font-semibold px-4 line-clamp-2">
+                  {news_item.title}
+                </h3>
               </div>
             </div>
           ))}
         </div>
-
       </div>
-
-     
-
     </div>
   );
 }

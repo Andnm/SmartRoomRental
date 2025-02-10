@@ -66,7 +66,6 @@ const ManageTransaction = () => {
         setIsLoading(true);
         try {
           const responseGetAllItem = await getAllTransactionByAdmin();
-          console.log("responseGetAllItem", responseGetAllItem);
 
           const sortedData = [...responseGetAllItem].sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -226,7 +225,7 @@ const ManageTransaction = () => {
     <div>
       <div className="header-order">
         <SearchFilterHeader
-          searchPlaceholder="Tìm kiếm người dùng bằng email"
+          searchPlaceholder="Tìm kiếm giao dịch bằng email khách hàng"
           searchValue={searchText}
           onSearchChange={setSearchText}
           haveFilter={true}

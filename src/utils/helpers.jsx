@@ -120,12 +120,14 @@ export const options_post_list = [
     name: "Phòng trọ",
     des: "Chỗ ở sạch sẽ, an ninh, giá hợp lý, thích hợp cho sinh viên và người đi làm.",
     link: "",
+    value: "post_room",
     icon: <FaHome size={80} color="#1E40AF" />,
   },
   {
     name: "Tìm bạn ở ghép",
     des: "Tìm bạn ở ghép, chung cư sạch đẹp, an ninh tốt...",
     link: "",
+    value: "looking_for_roommates",
     icon: <FaUsers size={80} color="#1E40AF" />,
   },
 ];
@@ -137,6 +139,32 @@ export const innkeeper_menu = [
   { name: "Lịch sử", icon: <FaHistory />, path: "/history" },
   { name: "Bảng phí đăng tin", icon: <FaDollarSign />, path: "/pricing" },
   { name: "Gói hội viên", icon: <FaCrown />, path: "/membership" },
+];
+
+export const objectLabels = ["Đi học", "Đi làm", "Gia đình", "Cặp đôi"];
+
+export const environmentLabels = [
+  "Chợ",
+  "Siêu thị",
+  "Bệnh viện",
+  "Công viên",
+  "Trường học",
+  "Trung tâm GDTT",
+  "Bến xe bus",
+];
+
+export const utilityLabels = [
+  "Wifi",
+  "Vệ sinh trong",
+  "Phòng tắm",
+  "Kệ bếp",
+  "Máy giặt",
+  "Điều hòa",
+  "Tủ lạnh",
+  "Giường nệm",
+  "Tủ áo quần",
+  "Bãi để xe riêng",
+  "Camera an ninh",
 ];
 
 export const iconMap = {

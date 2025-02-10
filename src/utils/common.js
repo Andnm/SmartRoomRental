@@ -1,4 +1,8 @@
-import { boardingCategories, housingCategoryTranslation } from "./constants";
+import {
+  boardingCategories,
+  housingCategoryTranslation,
+  housingTypeTranslation,
+} from "./constants";
 
 export const formatPrice = (price) => {
   const numberString = String(price);
@@ -45,6 +49,10 @@ export const translateHousingCategory = (type) => {
   return housingCategoryTranslation[type] || "Không xác định";
 };
 
+export const translateHousingType = (type) => {
+  return housingTypeTranslation[type] || "Không xác định";
+};
+
 export const getCategoryLabel = (category) => {
   return boardingCategories.includes(category)
     ? "Phòng trọ"
@@ -71,5 +79,8 @@ export const convertMembership = (actionType) => {
     add_funds: "Nạp tiền tài khoản",
   };
 
-  return actionMap[actionType] || actionType; 
+  return actionMap[actionType] || actionType;
 };
+
+export const generateOptions = (translationObject) =>
+  Object.entries(translationObject).map(([value, label]) => ({ label, value }));

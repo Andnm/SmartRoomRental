@@ -671,6 +671,17 @@ export const housingCategoryTranslation = {
   "Full-house": "Nhà nguyên căn",
 };
 
+export const housingStatusTranslation = {
+  "active": "Đang hiệu lực",
+  "inactive": "Hết hiệu lực",
+  "under_review": "Đang chờ duyệt",
+};
+
+export const housingTypeTranslation = {
+  "post_room": "Đăng phòng",
+  "looking_for_roommates": "Tìm bạn ở ghép",
+};
+
 export const boardingCategories = [
   "Self-managed boarding house",
   "Managed boarding house",
