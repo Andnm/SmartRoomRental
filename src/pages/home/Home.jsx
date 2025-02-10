@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import banner_img from "../../assets/images/banner.png";
 import { FaDollarSign, FaFilter, FaStar } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
@@ -19,10 +19,40 @@ import {
   IoMdHeart,
 } from "react-icons/io";
 import { getRandomRating } from "../../utils/common";
+import { toast } from "react-toastify";
+import { getAllRoomsByGuest } from "../../services/room.services";
+import SkeletonRoomCardLoading from "../../components/room/roomCard/SkeletonRoomCardLoading";
 
 function Home() {
   const [activeTab, setActiveTab] = useState("all");
-  const filteredRooms = rooms_sample.filter(
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [originalData, setOriginalData] = useState([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      setIsLoading(true);
+      try {
+        const responseGetAllItem = await getAllRoomsByGuest();
+
+        const sortedData = [...responseGetAllItem].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+
+        setOriginalData(sortedData);
+      } catch (error) {
+        toast.error("There was an error loading data!");
+        toast.error(error.response?.data);
+        console.error("There was an error loading data!:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  const filteredRooms = originalData.filter(
     (room) => room.type === "post_room" && room.status === "active"
   );
 
@@ -164,17 +194,29 @@ function Home() {
             lựa chọn chỗ ở vip
           </h2>
 
-          <div className="flex flex-wrap gap-4 justify-between ">
-            {displayedRooms.map((room, index) => (
-              <RoomCard
-                key={index}
-                room={room}
-                is_hot={false}
-                can_navigate={true}
-                show_status={false}
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="grid grid-cols-4 gap-4">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <SkeletonRoomCardLoading key={index} />
+              ))}
+            </div>
+          ) : filteredRooms.length === 0 ? (
+            <p className="text-center text-gray-500 text-lg font-semibold">
+              Không tồn tại phòng trọ nào có sẵn
+            </p>
+          ) : (
+            <div className="flex flex-wrap gap-4 justify-between ">
+              {displayedRooms.map((room, index) => (
+                <RoomCard
+                  key={index}
+                  room={room}
+                  is_hot={false}
+                  can_navigate={true}
+                  show_status={false}
+                />
+              ))}
+            </div>
+          )}
 
           {filteredRooms.length > 8 && (
             <button
@@ -223,7 +265,7 @@ function Home() {
             autoplaySpeed={3000}
           >
             {rooms_carousel.map((room) => (
-              <div className="" key={room.id}>
+              <div className="" key={room._id}>
                 <div className="bg-white rounded-md text-black p-1 shadow-md hover:shadow-lg transition duration-300 mx-2">
                   <img
                     src={room.img_links[0]}
@@ -290,17 +332,29 @@ function Home() {
             các tin trọ hot
           </h2>
 
-          <div className="flex flex-wrap gap-4 justify-between ">
-            {displayedRooms.map((room, index) => (
-              <RoomCard
-                key={index}
-                room={room}
-                is_hot={true}
-                can_navigate={true}
-                show_status={false}
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="grid grid-cols-4 gap-4">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <SkeletonRoomCardLoading key={index} />
+              ))}
+            </div>
+          ) : filteredRooms.length === 0 ? (
+            <p className="text-center text-gray-500 text-lg font-semibold">
+              Không tồn tại phòng trọ nào có sẵn
+            </p>
+          ) : (
+            <div className="flex flex-wrap gap-4 justify-between ">
+              {displayedRooms.map((room, index) => (
+                <RoomCard
+                  key={index}
+                  room={room}
+                  is_hot={true}
+                  can_navigate={true}
+                  show_status={false}
+                />
+              ))}
+            </div>
+          )}
 
           {filteredRooms.length > 8 && (
             <button

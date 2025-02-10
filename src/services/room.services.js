@@ -1,8 +1,17 @@
 import axiosInstance from "./axiosInstance";
 
-export const getAllRooms = async () => {
+export const getAllRoomsByAdmin = async () => {
   try {
     const response = await axiosInstance.get(`/api/rooms`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllRoomsByGuest = async () => {
+  try {
+    const response = await axiosInstance.get(`/api/rooms/active`);
     return response.data;
   } catch (error) {
     throw error;

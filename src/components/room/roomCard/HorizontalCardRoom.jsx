@@ -9,10 +9,10 @@ const HorizontalCardRoom = ({ room, is_hot }) => {
 
     const handleNavigation = () => {
         if (room.type === "looking_for_roommates") {
-            navigate(`/looking-for-roommates/${room.id}`);
+            navigate(`/looking-for-roommates/${room._id}`);
         } else {
             const categoryPath = boardingCategories.includes(room.category) ? "boarding" : "apartment-fullhouse";
-            navigate(`/${categoryPath}/${room.id}`);
+            navigate(`/${categoryPath}/${room._id}`);
         }
     };
 

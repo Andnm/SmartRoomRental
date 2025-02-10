@@ -672,14 +672,15 @@ export const housingCategoryTranslation = {
 };
 
 export const housingStatusTranslation = {
-  "active": "Đang hiệu lực",
-  "inactive": "Hết hiệu lực",
-  "under_review": "Đang chờ duyệt",
+  active: "Đang hiệu lực",
+  inactive: "Hết hiệu lực",
+  under_review: "Đang chờ duyệt",
+  rejected: "Bị từ chối",
 };
 
 export const housingTypeTranslation = {
-  "post_room": "Đăng phòng",
-  "looking_for_roommates": "Tìm bạn ở ghép",
+  post_room: "Đăng phòng",
+  looking_for_roommates: "Tìm bạn ở ghép",
 };
 
 export const boardingCategories = [

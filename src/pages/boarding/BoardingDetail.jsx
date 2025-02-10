@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { boardingCategories, rooms_sample } from "../../utils/constants";
 import ImageGridGallery from "../../components/room/gallery/ImageGridGallery";
@@ -8,40 +8,96 @@ import { translateHousingCategory } from "../../utils/common";
 import { IoMdPerson } from "react-icons/io";
 import { FaClock, FaDollarSign } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
-import { EnvironmentIcon, ObjectIcon, useScrollToTop, UtilityIcon } from "../../utils/helpers";
+import {
+  EnvironmentIcon,
+  ObjectIcon,
+  useScrollToTop,
+  UtilityIcon,
+} from "../../utils/helpers";
 import address_guide from "../../assets/images/address_guide.png";
-
+import { getAllRoomsByGuest } from "../../services/room.services";
+import { toast } from "react-toastify";
 
 function BoardingDetail() {
   useScrollToTop();
 
   const { id } = useParams();
 
-  const room = rooms_sample.find(
-    (room) => room.id === parseInt(id) && boardingCategories.includes(room.category)
+  const [originalData, setOriginalData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      setIsLoading(true);
+      try {
+        const responseGetAllItem = await getAllRoomsByGuest();
+
+        const sortedData = [...responseGetAllItem].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+
+        setOriginalData(sortedData);
+      } catch (error) {
+        toast.error("There was an error loading data!");
+        toast.error(error.response?.data);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  const room = originalData.find(
+    (room) =>
+      room._id === id && boardingCategories.includes(room.category)
   );
 
   if (!room) {
-    return <h2 className="text-center py-4">Không tìm thấy phòng trọ hoặc chung cư/nhà nguyên căn phù hợp!</h2>;
+    return (
+      <h2 className="text-center py-4">
+        Không tìm thấy phòng trọ hoặc chung cư/nhà nguyên căn phù hợp!
+      </h2>
+    );
   }
 
   return (
     <div className="light-gray-background pb-6">
       <div className="container">
-
         <div className="breadcrumb py-4">
           <nav className="text-sm text-gray-500 flex items-center">
-            <Link to="/" className="hover:underline text-blue-800 mr-2 font-semibold">Trang chủ</Link> {"/"}
-            <Link to="/boarding" className="hover:underline text-blue-800 mx-2 font-semibold">Phòng trọ</Link> {"/"}
-            <span className="text-gray-400 font-semibold inline-block ml-2" title={room.title}>{room.title}</span>
+            <Link
+              to="/"
+              className="hover:underline text-blue-800 mr-2 font-semibold"
+            >
+              Trang chủ
+            </Link>{" "}
+            {"/"}
+            <Link
+              to="/boarding"
+              className="hover:underline text-blue-800 mx-2 font-semibold"
+            >
+              Phòng trọ
+            </Link>{" "}
+            {"/"}
+            <span
+              className="text-gray-400 font-semibold inline-block ml-2"
+              title={room.title}
+            >
+              {room.title}
+            </span>
           </nav>
         </div>
 
         <div className="bg-white rounded-md py-6">
           <div className="px-6">
             <div className="flex space-x-2">
-              <span className="bg-red-500 cursor-pointer text-white px-3 py-1 rounded-xl text-sm font-semibold">Tin Vip</span>
-              <span className="bg-blue-100 cursor-pointer text-blue-800 px-3 py-1 rounded-xl text-sm font-semibold">Phòng trọ</span>
+              <span className="bg-red-500 cursor-pointer text-white px-3 py-1 rounded-xl text-sm font-semibold">
+                Tin Vip
+              </span>
+              <span className="bg-blue-100 cursor-pointer text-blue-800 px-3 py-1 rounded-xl text-sm font-semibold">
+                Phòng trọ
+              </span>
               <span className="bg-blue-100 cursor-pointer text-blue-800 px-3 py-1 rounded-xl text-sm font-semibold">
                 {room.address.split(", ").pop()}
               </span>
@@ -49,12 +105,15 @@ function BoardingDetail() {
           </div>
 
           <div className="px-6 my-3">
-            <h3 className="text-lg truncate uppercase font-bold" title={room.title}>
+            <h3
+              className="text-lg truncate uppercase font-bold"
+              title={room.title}
+            >
               {room.title}
             </h3>
           </div>
 
-          <div className='flex items-center mt-1 px-6 mb-4'>
+          <div className="flex items-center mt-1 px-6 mb-4">
             <IoLocationSharp className="mr-1 text-gray-400" size={25} />
             <p className="text-gray-400  truncate" title={room.address}>
               {room.address}
@@ -66,7 +125,9 @@ function BoardingDetail() {
           <div className="px-6 flex flex-row justify-between my-3">
             <div>
               <p className="text-sm text-gray-400">Giá chỉ từ</p>
-              <p className='text-xl font-bold text-orange-600'>{room.price.toLocaleString()} VND/tháng</p>
+              <p className="text-xl font-bold text-orange-600">
+                {room.price.toLocaleString()} VND/tháng
+              </p>
             </div>
 
             <div
@@ -84,21 +145,28 @@ function BoardingDetail() {
               <ul className="text-gray-700 grid grid-cols-3">
                 {[
                   {
-                    icon: <FaHome />, text: translateHousingCategory(room.category)
+                    icon: <FaHome />,
+                    text: translateHousingCategory(room.category),
                   },
                   {
-                    icon: <FaDollarSign />, text: room.price.toLocaleString() + " VNĐ/tháng"
+                    icon: <FaDollarSign />,
+                    text: room.price.toLocaleString() + " VNĐ/tháng",
                   },
-                  { icon: <IoMdPerson />, text: "Người đăng: " + room.contact_fullname },
+                  {
+                    icon: <IoMdPerson />,
+                    text: "Người đăng: " + room.contact_fullname,
+                  },
                   { icon: <FaPhoneAlt />, text: room.contact_phone },
                   { icon: <MdOutlineEmail />, text: room.contact_email },
-                  { icon: <FaClock />, text: "Thời điểm đăng: " + "" }
+                  { icon: <FaClock />, text: "Thời điểm đăng: " + "" },
                 ].map((item, index) => (
                   <li key={index} className="flex items-center space-x-1">
                     <div className="w-10 h-10 flex items-center justify-center rounded-full text-blue-800">
                       {item.icon}
                     </div>
-                    <span className="hover:text-blue-600 cursor-pointer transition">{item.text}</span>
+                    <span className="hover:text-blue-600 cursor-pointer transition">
+                      {item.text}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -110,8 +178,9 @@ function BoardingDetail() {
             <div className="border-b border-gray-200 pb-4">
               <h1 className="text-xl font-semibold">Giới thiệu</h1>
 
-              <pre style={{ fontFamily: "Roboto, sans-serif" }}>{room.description}</pre>
-
+              <pre style={{ fontFamily: "Roboto, sans-serif" }}>
+                {room.description}
+              </pre>
             </div>
           </div>
 
@@ -167,9 +236,7 @@ function BoardingDetail() {
               </div>
             </div>
           </div>
-
         </div>
-
       </div>
     </div>
   );

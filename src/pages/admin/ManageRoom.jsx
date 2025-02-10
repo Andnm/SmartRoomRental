@@ -26,7 +26,7 @@ import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/selectors/selector";
 import {
   approveRoomForAdmin,
-  getAllRooms,
+  getAllRoomsByAdmin,
   rejectRoomForAdmin,
 } from "../../services/room.services";
 import SearchFilterHeader from "../../components/manage/SearchFilterHeader";
@@ -73,7 +73,7 @@ const ManageRoom = () => {
       if (userData) {
         setIsLoading(true);
         try {
-          const responseGetAllItem = await getAllRooms();
+          const responseGetAllItem = await getAllRoomsByAdmin();
 
           const sortedData = [...responseGetAllItem].sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)

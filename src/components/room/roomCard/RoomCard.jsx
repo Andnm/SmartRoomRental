@@ -1,7 +1,10 @@
 import React from "react";
 import { IoLocationSharp } from "react-icons/io5";
 import { getCategoryLabel } from "../../../utils/common";
-import { boardingCategories, housingStatusTranslation } from "../../../utils/constants";
+import {
+  boardingCategories,
+  housingStatusTranslation,
+} from "../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 
 const RoomCard = ({ room, is_hot, can_navigate, show_status }) => {
@@ -9,12 +12,12 @@ const RoomCard = ({ room, is_hot, can_navigate, show_status }) => {
 
   const handleNavigation = () => {
     if (room.type === "looking_for_roommates") {
-      navigate(`/looking-for-roommates/${room.id}`);
+      navigate(`/looking-for-roommates/${room._id}`);
     } else {
       const categoryPath = boardingCategories.includes(room.category)
         ? "boarding"
         : "apartment-fullhouse";
-      navigate(`/${categoryPath}/${room.id}`);
+      navigate(`/${categoryPath}/${room._id}`);
     }
   };
 
@@ -48,6 +51,8 @@ const RoomCard = ({ room, is_hot, can_navigate, show_status }) => {
           ? "bg-green-100 text-green-700"
           : room.status === "inactive"
           ? "bg-gray-200 text-gray-700"
+          : room.status === "rejected"
+          ? "bg-red-100 text-red-800"
           : "bg-purple-100 text-purple-800"
       }`}
             >

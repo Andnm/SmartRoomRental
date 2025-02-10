@@ -25,7 +25,7 @@ import { PiPlus } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/selectors/selector";
-import { getAllRooms } from "../../services/room.services";
+import { getAllRoomsByAdmin } from "../../services/room.services";
 import SearchFilterHeader from "../../components/manage/SearchFilterHeader";
 import { getAllUserByAdmin } from "../../services/user.services";
 import {
