@@ -17,6 +17,7 @@ import {
 import address_guide from "../../assets/images/address_guide.png";
 import { getAllRoomsByGuest } from "../../services/room.services";
 import { toast } from "react-toastify";
+import SpinnerLoading from "../../components/loading/SpinnerLoading";
 
 function BoardingDetail() {
   useScrollToTop();
@@ -49,9 +50,12 @@ function BoardingDetail() {
   }, []);
 
   const room = originalData.find(
-    (room) =>
-      room._id === id && boardingCategories.includes(room.category)
+    (room) => room._id === id && boardingCategories.includes(room.category)
   );
+
+  if (isLoading) {
+    return <SpinnerLoading />;
+  }
 
   if (!room) {
     return (

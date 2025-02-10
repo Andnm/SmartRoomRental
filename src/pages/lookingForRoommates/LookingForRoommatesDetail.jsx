@@ -17,6 +17,7 @@ import {
 import address_guide from "../../assets/images/address_guide.png";
 import { getAllRoomsByGuest } from "../../services/room.services";
 import { toast } from "react-toastify";
+import SpinnerLoading from "../../components/loading/SpinnerLoading";
 
 function LookingForRoommatesDetail() {
   useScrollToTop();
@@ -49,8 +50,14 @@ function LookingForRoommatesDetail() {
   }, []);
 
   const room = originalData.find(
-    (room) => room._id === parseInt(id) && room.type === "looking_for_roommates"
+    (room) => room._id === id && room.type === "looking_for_roommates"
   );
+
+  if(isLoading) {
+    return (
+      <SpinnerLoading/>
+    )
+  }
 
   if (!room) {
     return (
