@@ -1,4 +1,3 @@
-
 import { Card, Form, Input, Button, message } from "antd";
 import React, { useRef, useState } from "react";
 import { forgotPassword, resetPassword } from "../../services/auth.services";
@@ -13,10 +12,6 @@ const ForgotPassword = () => {
   const inputsOtpRef = useRef([]);
   const navigate = useNavigate();
 
-  const [resEmailForm, setResEmailForm] = useState({
-    otpExpired: "",
-    otpStored: "",
-  });
   const [isOpenOtpForm, setIsOpenOtpForm] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [errorOtp, setErrorOtp] = useState("");
@@ -27,13 +22,6 @@ const ForgotPassword = () => {
       const resForgotPassword = await forgotPassword(
         form.getFieldValue("email")
       );
-
-      console.log("resForgotPassword: ", resForgotPassword);
-
-      setResEmailForm({
-        otpExpired: resForgotPassword.otpExpired,
-        otpStored: resForgotPassword.otpStored,
-      });
 
       setIsOpenOtpForm(true);
     } catch (error) {
@@ -47,46 +35,39 @@ const ForgotPassword = () => {
   const confirmOTP = async () => {
     setLoadingData(true);
 
-    const otp = [
-      inputsOtpRef.current[0].value,
-      ...inputsOtpRef.current.slice(1).map((input) => input.value),
-    ].join("");
+    try {
+      const otp = [
+        inputsOtpRef.current[0].value,
+        ...inputsOtpRef.current.slice(1).map((input) => input.value),
+      ].join("");
 
-    const dataBody = {
-      otp: parseInt(otp, 10),
-      otpExpired: resEmailForm.otpExpired,
-      otpStored: resEmailForm.otpStored,
-      email: form.getFieldValue("email"),
-    };
+      const dataBody = {
+        otp: otp,
+        email: form.getFieldValue("email"),
+      };
 
-    resetPassword(dataBody).then((resOtp) => {
-      if (resetPassword.rejected.match(resOtp)) {
-        setErrorOtp(resOtp.payload);
-      } else if (resetPassword.fulfilled.match(resOtp)) {
-        navigate("/");
-        setIsOpenOtpForm(false);
-        toast.success(`${resOtp.payload}`);
-      }
+      const resOtp = await resetPassword(dataBody);
 
+      navigate("/");
+      setIsOpenOtpForm(false);
+      toast.success(`Mật khẩu mới đã được gửi tới email của bạn!`);
+    } catch (error) {
+      setErrorOtp(error.response.data);
+    } finally {
       setLoadingData(false);
-    });
+    }
   };
 
   const resendOTP = async () => {
-    setErrorOtp(""); 
-    setLoadingData(true); 
+    setErrorOtp("");
+    setLoadingData(true);
 
     try {
       const resSendOtp = await forgotPassword({
         email: form.getFieldValue("email"),
       });
 
-        toast.success("OTP đã được gửi lại, vui lòng kiểm tra!");
-        setResEmailForm({
-          otpExpired: resSendOtp.otpExpired,
-          otpStored: resSendOtp.otpStored,
-        });
-     
+      toast.success("OTP đã được gửi lại, vui lòng kiểm tra!");
     } catch (error) {
       console.error("Error sending OTP:", error);
       toast.error("Có lỗi xảy ra khi gửi OTP. Vui lòng thử lại!");
