@@ -343,7 +343,7 @@ const AddRoom = ({ onNext, selectedOption }) => {
 
           <h2 className="text-xl font-bold mb-4 mt-4">ĐỊA ĐIỂM</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
+            {/* <div>
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="city"
@@ -357,6 +357,7 @@ const AddRoom = ({ onNext, selectedOption }) => {
                 <option>Chọn Tỉnh/TP</option>
               </select>
             </div>
+
             <div>
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -371,6 +372,7 @@ const AddRoom = ({ onNext, selectedOption }) => {
                 <option>Quận/Huyện</option>
               </select>
             </div>
+
             <div>
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -385,6 +387,7 @@ const AddRoom = ({ onNext, selectedOption }) => {
                 <option>Phường/Xã</option>
               </select>
             </div>
+
             <div>
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -398,7 +401,8 @@ const AddRoom = ({ onNext, selectedOption }) => {
               >
                 <option>Đường</option>
               </select>
-            </div>
+            </div> */}
+
             <div className="col-span-2">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"

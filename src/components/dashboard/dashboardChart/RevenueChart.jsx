@@ -1,21 +1,14 @@
 // components/RevenueChart.js
 import { Bar } from "react-chartjs-2";
 
-const RevenueChart = () => {
+const RevenueChart = ({ totalAmount }) => {
   const data = {
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        label: "Khoá học",
-        data: [30, 50, 70, 90, 50, 40, 60],
+        label: "Gói nâng hội viên",
+        data: totalAmount,
         backgroundColor: "#0096fe",
-        maxBarThickness: 15,
-        borderRadius: 4,
-      },
-      {
-        label: "Chuyên gia",
-        data: [20, 40, 60, 80, 40, 30, 50],
-        backgroundColor: "#00e097",
         maxBarThickness: 15,
         borderRadius: 4,
       },

@@ -4,33 +4,24 @@ import { AiOutlineBarChart, AiFillTag } from "react-icons/ai";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { PiExport } from "react-icons/pi";
 
-const TodaySalesSummary = () => {
+const TodaySalesSummary = ({ saleData }) => {
   const summaryData = [
     {
       icon: <AiOutlineBarChart size={24} color="white" />,
       iconBackGroundColor: "#fb597e",
-      value: "$570",
+      value: `${saleData?.income?.totalIncomeCurrent} VNĐ`, 
       label: "Tổng doanh số",
-      scale: 1.2,
-      scaleType: "+",
+      scale: saleData?.income?.differencePercent, 
+      scaleType: saleData?.income?.differencePercent >= 0 ? "+" : "-", 
       backGroundColor: "#ffe2e6",
-    },
-    {
-      icon: <AiFillTag size={24} color="white" />,
-      iconBackGroundColor: "#3cd856",
-      value: "5",
-      label: "Khoá học đã bán",
-      scale: 1.5,
-      scaleType: "+",
-      backGroundColor: "#dcfce7",
     },
     {
       icon: <BsFillPersonPlusFill size={24} color="white" />,
       iconBackGroundColor: "#bf84ff",
-      value: "5",
+      value: saleData?.newUsers?.totalNewUsersCurrent, 
       label: "Khách hàng mới",
-      scale: 1.5,
-      scaleType: "+",
+      scale: saleData?.newUsers?.differencePercent, 
+      scaleType: saleData?.newUsers?.differencePercent >= 0 ? "+" : "-", 
       backGroundColor: "#f4e8fe",
     },
   ];
@@ -61,7 +52,7 @@ const TodaySalesSummary = () => {
   return (
     <>
       <div className="summary_header">
-        <p>Doanh số hôm nay</p>
+        <p>Số liệu hôm nay</p>
         <button>
           {" "}
           <PiExport />

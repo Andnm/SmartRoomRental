@@ -1,7 +1,9 @@
 // components/VisitorsChart.js
 import { Line } from "react-chartjs-2";
 
-const VisitorsChart = () => {
+const VisitorsChart = ({ countUsers, countTransactions }) => {
+  const currentMonth = new Date().getMonth();
+
   const data = {
     labels: [
       "Jan",
@@ -16,21 +18,11 @@ const VisitorsChart = () => {
       "Oct",
       "Nov",
       "Dec",
-    ],
+    ].slice(0, currentMonth + 1), 
     datasets: [
       {
-        label: "Loyal Customers",
-        data: [120, 190, 300, 500, 200, 300, 400, 120, 190, 300, 500, 200],
-        borderColor: "#b233f5",
-        backgroundColor: "#b233f5",
-        fill: false,
-        tension: 0.4,
-        pointBackgroundColor: "#b233f5",
-        pointRadius: 0,
-      },
-      {
-        label: "New Customers",
-        data: [150, 230, 320, 420, 210, 310, 450, 150, 230, 320, 420, 210],
+        label: "Khách hàng mới",
+        data: countUsers.slice(0, currentMonth + 1), 
         borderColor: "#ed6a69",
         backgroundColor: "#ed6a69",
         fill: false,
@@ -39,8 +31,8 @@ const VisitorsChart = () => {
         pointRadius: 0,
       },
       {
-        label: "Unique Customers",
-        data: [100, 170, 250, 350, 150, 270, 370, 100, 170, 250, 350, 150],
+        label: "Số lượng giao dịch",
+        data: countTransactions.slice(0, currentMonth + 1), 
         borderColor: "#4cd660",
         backgroundColor: "#4cd660",
         fill: false,

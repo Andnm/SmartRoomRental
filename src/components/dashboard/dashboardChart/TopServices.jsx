@@ -1,10 +1,10 @@
 // components/TopServices.js
 const TopServices = () => {
   const data = [
-    { name: "Khóa học online", popularity: 45, color: "#1299fa" },
-    { name: "Khóa học offline", popularity: 29, color: "#26dfa0" },
-    { name: "Gọi điện tư vấn", popularity: 18, color: "#8554e6" },
-    { name: "Đặt lịch tư vấn", popularity: 25, color: "#fe8f0e" },
+    { name: "Gói hội viên", popularity: 100, color: "#1299fa" },
+    // { name: "Khóa học offline", popularity: 29, color: "#26dfa0" },
+    // { name: "Gọi điện tư vấn", popularity: 18, color: "#8554e6" },
+    // { name: "Đặt lịch tư vấn", popularity: 25, color: "#fe8f0e" },
   ];
 
   return (
