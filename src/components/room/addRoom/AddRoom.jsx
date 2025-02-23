@@ -6,14 +6,20 @@ import {
   utilityLabels,
 } from "../../../utils/helpers";
 import { housingCategoryTranslation } from "../../../utils/constants";
-import { message, Upload } from "antd";
+import { message, Modal, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import SpinnerLoading from "../../loading/SpinnerLoading";
 import { toast } from "react-toastify";
-import { postRooms } from "../../../services/room.services";
+import {
+  createLookingForRoommates,
+  postRooms,
+} from "../../../services/room.services";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../../redux/selectors/selector";
 
 const AddRoom = ({ onNext, selectedOption }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const userData = useSelector(userSelector);
   const [roomDetails, setRoomDetails] = useState({
     title: "",
     type: selectedOption,
@@ -101,17 +107,41 @@ const AddRoom = ({ onNext, selectedOption }) => {
           img_links: uploadedImageUrls,
         };
 
-        console.log("roomDetails after up cloud: ", updatedRoomDetails);
+        if (
+          updatedRoomDetails.type === "looking_for_roommates" &&
+          userData?.user?.membership === "Normal"
+        ) {
+          Modal.confirm({
+            title: "Thông báo",
+            content:
+              "Vì bạn chưa phải là hội viên nên thao tác này sẽ tốn phí 30.000 VND. Bạn vẫn muốn tiếp tục?",
+            okText: "Tiếp tục",
+            cancelText: "Huỷ",
+            onOk: async () => {
+              const updatedDetailsWithAmount = {
+                ...updatedRoomDetails,
+                amount: 30000,
+              };
 
-        const responseCreate = await postRooms(updatedRoomDetails);
-        console.log("responseCreate: ", responseCreate);
+              const responseCreateLookingForRoommates =
+                await createLookingForRoommates(updatedDetailsWithAmount);
 
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
+              const redirectUrl = responseCreateLookingForRoommates.paymentUrl;
 
-        onNext();
+              window.location.href = redirectUrl;
+            },
+            onCancel() {},
+          });
+        } else {
+          const responseCreate = await postRooms(updatedRoomDetails);
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+
+          onNext();
+        }
       } catch (error) {
         toastError(error);
       } finally {
@@ -550,7 +580,7 @@ const AddRoom = ({ onNext, selectedOption }) => {
               type="button"
               onClick={handleSubmit}
             >
-              Đăng trọ
+              Đăng phòng
             </button>
           </div>
         </form>

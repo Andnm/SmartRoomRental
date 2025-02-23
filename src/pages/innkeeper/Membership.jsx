@@ -43,8 +43,6 @@ const Membership = () => {
         dataBody
       );
 
-      console.log("responseCreateLinkInternetBanking: ", responseCreateLinkInternetBanking)
-
       const redirectUrl = responseCreateLinkInternetBanking.paymentUrl;
 
       window.location.href = redirectUrl;

@@ -79,8 +79,6 @@ const ManageRoom = () => {
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
           );
 
-          console.log("responseGetAllItem: ", responseGetAllItem);
-
           setOriginalData(sortedData);
           setProcessingData(sortedData);
         } catch (error) {

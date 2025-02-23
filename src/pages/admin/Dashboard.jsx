@@ -13,10 +13,12 @@ import { useSelector } from "react-redux";
 import {
   getStatisticMonthly,
   getStatisticSale,
+  getStatisticSaleMonth,
 } from "../../services/statistic.services";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
+import { getAllTransactionByAdmin } from "../../services/transaction.services";
 
 ChartJS.register(...registerables);
 
@@ -24,7 +26,9 @@ const Dashboard = () => {
   const userData = useSelector(userSelector);
 
   const [saleData, setSaleData] = useState(null);
+  const [saleMonthData, setSaleMonthData] = useState(null);
   const [monthlyData, setMonthlyData] = useState(null);
+  const [transactionData, setTransactionData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -33,16 +37,18 @@ const Dashboard = () => {
         setIsLoading(true);
         try {
           const responseSale = await getStatisticSale();
+          const responseSaleMonth = await getStatisticSaleMonth();
           const responseMonthly = await getStatisticMonthly(2025);
+          const responseTransaction = await getAllTransactionByAdmin();
 
           setSaleData(responseSale);
+          setSaleMonthData(responseSaleMonth)
           setMonthlyData(responseMonthly);
+          setTransactionData(responseTransaction)
 
-          console.log("responseSale: ", responseSale);
-          console.log("responseMonthly: ", responseMonthly);
         } catch (error) {
-          toast.error("There was an error loading data!");
-          toast.error(error.response?.data?.message || error.message);
+          // toast.error("There was an error loading data!");
+          // toast.error(error.response?.data?.message || error.message);
           console.error("There was an error loading data!:", error);
         } finally {
           setIsLoading(false);
@@ -65,12 +71,13 @@ const Dashboard = () => {
             <>
               {/* <div className="grid grid-flow-col grid-rows-2 grid-cols-3 gap-8"> */}
               <div className="today_sales_summary dashboard_boxshadow">
-                <TodaySalesSummary saleData={saleData} />
+                <TodaySalesSummary saleData={saleData} saleMonthData={saleMonthData} />
               </div>
-              <div className="visitors_Chart dashboard_boxshadow">
+              <div className="visitors_Chart dashboard_boxshadow top_services">
                 <VisitorsChart
                   countUsers={monthlyData.countUsers}
                   countTransactions={monthlyData.countTransactions}
+                  transactionData={transactionData}
                 />
               </div>
               <div className="revenue_chart dashboard_boxshadow">
@@ -82,9 +89,9 @@ const Dashboard = () => {
               {/* <div className="goals_chart dashboard_boxshadow">
                 <GoalsChart />
               </div> */}
-              <div className="top_services dashboard_boxshadow">
+              {/* <div className="top_services dashboard_boxshadow">
                 <TopServices />
-              </div>
+              </div> */}
               {/* <div className="world_map dashboard_boxshadow">
                 <WorldMap />
               </div>

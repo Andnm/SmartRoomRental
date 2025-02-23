@@ -31,9 +31,7 @@ function Header() {
       if (token !== "undefined") {
         const getCurrentUserAction = await dispatch(getCurrentUserThunk());
         if (getCurrentUserThunk.rejected.match(getCurrentUserAction)) {
-          console.log(
-            getCurrentUserAction.payload || getCurrentUserAction.error.message
-          );
+     
         } else {
           const userRole = getCurrentUserAction?.payload?.role;
 

@@ -27,6 +27,15 @@ export const postRooms = async (dataBody) => {
   }
 };
 
+export const createLookingForRoommates = async (dataBody) => {
+  try {
+    const response = await axiosInstance.post(`/api/payOs/create_post_room`, dataBody);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const deleteRooms = async (room_id) => {
   try {
     const response = await axiosInstance.post(`/api/rooms/${room_id}`);

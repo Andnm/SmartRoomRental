@@ -99,7 +99,7 @@ export const sliderMenu = [
   {
     key: "manage-room",
     icon: <FaHotel />,
-    label: "Phòng trọ",
+    label: "Quản lý phòng",
     roles: [ROLE_ADMIN],
   },
   {
@@ -125,10 +125,11 @@ export const options_post_list = [
   },
   {
     name: "Tìm bạn ở ghép",
-    des: "Tìm bạn ở ghép, chung cư sạch đẹp, an ninh tốt...",
+    des: "Tìm bạn ở ghép, chung cư sạch đẹp, an ninh tốt.",
     link: "",
     value: "looking_for_roommates",
     icon: <FaUsers size={80} color="#1E40AF" />,
+    note: "Dịch vụ này sẽ tốn phí 30k/lượt đăng nếu bạn chưa là hội viên"
   },
 ];
 

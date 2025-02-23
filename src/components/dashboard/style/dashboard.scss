@@ -118,8 +118,9 @@ $primary-color: #4caf50;
         }
         .summary_card_scale {
           //   font-weight: 600;
-          color: #9eaeec;
+          // color: #9eaeec;
           margin-bottom: 8px;
+          
         }
       }
     }
@@ -130,8 +131,9 @@ $primary-color: #4caf50;
   }
 
   .revenue_chart {
-    grid-column: span 10;
-    height: 35vh;
+    width: 100%;
+    grid-column: span 20;
+    height: 50vh;
   }
 
   .satisfaction_chart {
@@ -145,7 +147,7 @@ $primary-color: #4caf50;
   }
 
   .top_services {
-    grid-column: span 10;
+    // grid-column: span 10;
     table {
       width: 100%;
       border-collapse: collapse;

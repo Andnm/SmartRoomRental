@@ -77,6 +77,8 @@ export const convertMembership = (actionType) => {
   const actionMap = {
     up_membership: "Nâng cấp hội viên",
     add_funds: "Nạp tiền tài khoản",
+    post_room: "Đăng phòng",
+    looking_for_roommates: "Đăng tìm bạn ở chung"
   };
 
   return actionMap[actionType] || actionType;
