@@ -1,5 +1,17 @@
 import axiosInstance from "./axiosInstance";
 
+export const createAddFundsByPayOs = async (amount) => {
+  try {
+    const response = await axiosInstance.post(
+      `/api/payOs/create_add_funds`,
+      amount
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const createUpMembershipByPayOs = async (membership, amount) => {
   try {
     const response = await axiosInstance.post(
