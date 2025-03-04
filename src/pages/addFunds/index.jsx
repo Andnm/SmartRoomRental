@@ -28,8 +28,11 @@ const AddFunds = () => {
 
 
     const handleAddFunds = () => {
-        if (selectedAmount === 0 && customAmount === 0) {
+        if (selectedAmount === 0 && customAmount === 0 ) {
             toast.error("Vui lòng chọn số tiền thanh toán")
+        } else if (selectedAmount === 0 && customAmount < 0) {
+            toast.error('Vui lòng nhập số tiền hợp lệ');
+            return;
         } else {
             Modal.confirm({
                 title: 'Xác nhận nạp tiền',
@@ -48,12 +51,8 @@ const AddFunds = () => {
                     try {
                         const amountToCharge = selectedAmount === 0 ? customAmount : selectedAmount;
 
-                        if (amountToCharge <= 0) {
-                            toast.error('Vui lòng nhập số tiền hợp lệ');
-                            return;
-                        }
+                        const result = await createAddFundsByPayOs({ amount: amountToCharge });
 
-                        const result = await createAddFundsByPayOs({ amount: selectedAmount });
                         if (result && result.paymentUrl) {
                             window.location.href = result.paymentUrl;
                         }

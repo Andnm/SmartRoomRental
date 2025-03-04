@@ -10,8 +10,6 @@ const Account = () => {
   const userData = useSelector(userSelector);
   const fileInputRef = useRef(null);
 
-  console.log("userData: ", userData);
-
   const [formData, setFormData] = useState({
     fullname: userData?.user?.fullname || "",
     email: userData?.user?.email || "",
