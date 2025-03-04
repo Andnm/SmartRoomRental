@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsSend } from "react-icons/bs";
 import { HiOutlineLogout } from "react-icons/hi";
@@ -20,6 +20,7 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const user = useSelector(userSelector);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(true);
@@ -34,13 +35,14 @@ function Header() {
      
         } else {
           const userRole = getCurrentUserAction?.payload?.role;
+          const currentPath = location.pathname
 
           switch (userRole) {
             case ROLE_ADMIN:
               navigate("/dashboard");
               break;
             case ROLE_CUSTOMER:
-              navigate("/");
+              navigate(currentPath);
               break;
             default:
               navigate("/");

@@ -9,29 +9,50 @@ import { toast } from 'react-toastify';
 const AddFunds = () => {
     const dispatch = useDispatch();
     const userData = useSelector(userSelector);
-    const [selectedAmount, setSelectedAmount] = useState(0);
+    const [customAmount, setCustomAmount] = useState(0);
+    const [selectedAmount, setSelectedAmount] = useState(50000);
     const [paymentMethod, setPaymentMethod] = useState('ATM/INTERNET BANKING');
 
     const handleAmountSelect = (amount) => {
         setSelectedAmount(amount);
-    }
+        if (amount !== 0) {
+            setCustomAmount(0);
+        }
+    };
+
+    const handleCustomAmountChange = (e) => {
+        const value = parseInt(e.target.value, 10) || 0;
+        setCustomAmount(value);
+        setSelectedAmount(0);
+    };
+
 
     const handleAddFunds = () => {
-        if (selectedAmount === 0) {
+        if (selectedAmount === 0 && customAmount === 0) {
             toast.error("Vui lòng chọn số tiền thanh toán")
         } else {
             Modal.confirm({
                 title: 'Xác nhận nạp tiền',
                 content: (
                     <div>
-                        <p><strong>Số tiền thanh toán:</strong> {selectedAmount.toLocaleString()} VND</p>
-                        <p><strong>Phương thức thanh toán:</strong> {paymentMethod}</p>
+                        <p>
+                            <strong>Số tiền thanh toán:</strong> {
+                                (selectedAmount === 0 ? customAmount : selectedAmount).toLocaleString()
+                            } VND
+                        </p>                        <p><strong>Phương thức thanh toán:</strong> {paymentMethod}</p>
                         <p><strong>Nạp vào tài khoản:</strong> {userData?.user?.fullname || 'Chưa xác định'}</p>
                     </div>
                 ),
                 okText: "Confirm",
                 onOk: async () => {
                     try {
+                        const amountToCharge = selectedAmount === 0 ? customAmount : selectedAmount;
+
+                        if (amountToCharge <= 0) {
+                            toast.error('Vui lòng nhập số tiền hợp lệ');
+                            return;
+                        }
+
                         const result = await createAddFundsByPayOs({ amount: selectedAmount });
                         if (result && result.paymentUrl) {
                             window.location.href = result.paymentUrl;
@@ -44,7 +65,6 @@ const AddFunds = () => {
         }
     }
 
-    // Format tiền VND
     const formatCurrency = (amount) => {
         return amount.toLocaleString();
     }
@@ -171,14 +191,13 @@ const AddFunds = () => {
                         </label>
                     </div>
                     {selectedAmount === 0 && (
-                        <div className="mt-4">
-                            <input
-                                type="number"
-                                className="border p-2 w-full"
-                                placeholder="Nhập số tiền khác (VND)"
-                                onChange={(e) => setSelectedAmount(parseInt(e.target.value) || 0)}
-                            />
-                        </div>
+                        <input
+                            className="border p-2 w-full mt-4"
+                            type="number"
+                            value={customAmount || ""}
+                            onChange={handleCustomAmountChange}
+                            placeholder="Nhập số tiền"
+                        />
                     )}
                 </div>
                 <div className="mb-6">
@@ -221,7 +240,7 @@ const AddFunds = () => {
                             Số tiền thanh toán:
                         </p>
                         <p>
-                            {formatCurrency(selectedAmount)} VND
+                            {formatCurrency(selectedAmount || customAmount)} VND
                         </p>
                     </div>
                     <div className="mb-2">
