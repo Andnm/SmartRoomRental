@@ -125,6 +125,7 @@ const ManageTransaction = () => {
       render: (user) => (
         <div style={{ display: "flex", alignItems: "center" }}>
           <Avatar
+            src={user.avatar_url || generateFallbackAvatar(user.fullname)}
             src={user.avatar_url}
             alt={user.fullname}
             style={{ marginRight: "8px", border: "1px solid #d9d9d9" }}
