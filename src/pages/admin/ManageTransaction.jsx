@@ -126,7 +126,6 @@ const ManageTransaction = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <Avatar
             src={user.avatar_url || generateFallbackAvatar(user.fullname)}
-            src={user.avatar_url}
             alt={user.fullname}
             style={{ marginRight: "8px", border: "1px solid #d9d9d9" }}
             size={55}
@@ -245,6 +244,8 @@ const ManageTransaction = () => {
               options: [
                 { label: "Nâng cấp hội viên", value: "up_membership" },
                 { label: "Nạp tiền tài khoản", value: "add_funds" },
+                { label: "Đăng phòng", value: "post_room" },
+                { label: "Đăng tìm bạn ở chung", value: "looking_for_roommates" },
               ],
               value: typeFilter,
               onChange: setTypeFilter,
