@@ -13,8 +13,8 @@ const TodaySalesSummary = ({ saleData, saleMonthData }) => {
       iconBackGroundColor: "#fb597e", // Hồng đậm
       value: `${formatPrice(saleData?.income?.totalIncomeCurrent)} VNĐ`,
       label: "Tổng doanh số",
-      scale: saleData?.income?.differencePercent,
-      scaleType: saleData?.income?.differencePercent >= 0 ? "+" : "-",
+      scale: Math.round(saleData?.income?.differencePercent || 0),
+      scaleType: saleData?.income?.differencePercent >= 0 ? "+" : "",
       backGroundColor: "#ffe2e6", // Hồng nhạt
     },
     {
@@ -22,8 +22,8 @@ const TodaySalesSummary = ({ saleData, saleMonthData }) => {
       iconBackGroundColor: "#bf84ff", // Tím
       value: saleData?.newUsers?.totalNewUsersCurrent,
       label: "Khách hàng mới",
-      scale: saleData?.newUsers?.differencePercent,
-      scaleType: saleData?.newUsers?.differencePercent >= 0 ? "+" : "-",
+      scale: Math.round(saleData?.newUsers?.differencePercent || 0),
+      scaleType: saleData?.newUsers?.differencePercent >= 0 ? "+" : "",
       backGroundColor: "#f4e8fe", // Tím nhạt
     },
     {
@@ -31,8 +31,8 @@ const TodaySalesSummary = ({ saleData, saleMonthData }) => {
       iconBackGroundColor: "#4caf50", // Xanh lá
       value: saleData?.postRoomDifferencePercent?.totalPostRoomCurrent,
       label: "Đăng phòng",
-      scale: saleData?.postRoomDifferencePercent?.differencePercent,
-      scaleType: saleData?.postRoomDifferencePercent?.differencePercent >= 0 ? "+" : "-",
+      scale: Math.round(saleData?.postRoomDifferencePercent?.differencePercent || 0),
+      scaleType: saleData?.postRoomDifferencePercent?.differencePercent >= 0 ? "+" : "",
       backGroundColor: "#d0f0c0", // Xanh lá nhạt
     },
     {
@@ -40,20 +40,20 @@ const TodaySalesSummary = ({ saleData, saleMonthData }) => {
       iconBackGroundColor: "#2196f3", // Xanh dương
       value: saleData?.lookingForRoomDifferencePercent?.totalLookingForRoomCurrent,
       label: "Tìm bạn ở chung",
-      scale: saleData?.lookingForRoomDifferencePercent?.differencePercent,
-      scaleType: saleData?.lookingForRoomDifferencePercent?.differencePercent >= 0 ? "+" : "-",
+      scale: Math.round(saleData?.lookingForRoomDifferencePercent?.differencePercent || 0),
+      scaleType: saleData?.lookingForRoomDifferencePercent?.differencePercent >= 0 ? "+" : "",
       backGroundColor: "#cce7ff", // Xanh dương nhạt
     },
-];
+  ];
 
-const monthSaleData = [
+  const monthSaleData = [
     {
       icon: <AiOutlineBarChart size={24} color="white" />,
       iconBackGroundColor: "#ffa726", // Cam đậm
       value: `${formatPrice(saleMonthData?.income?.totalIncomeCurrent)} VNĐ`,
       label: "Tổng doanh số",
-      scale: saleMonthData?.income?.differencePercent,
-      scaleType: saleMonthData?.income?.differencePercent >= 0 ? "+" : "-",
+      scale: Math.round(saleMonthData?.income?.differencePercent || 0),
+      scaleType: saleMonthData?.income?.differencePercent >= 0 ? "+" : "",
       backGroundColor: "#ffe0b2", // Cam nhạt
     },
     {
@@ -61,8 +61,8 @@ const monthSaleData = [
       iconBackGroundColor: "#009688", // Xanh ngọc
       value: saleMonthData?.newUsers?.totalNewUsersCurrent,
       label: "Khách hàng mới",
-      scale: saleMonthData?.newUsers?.differencePercent,
-      scaleType: saleMonthData?.newUsers?.differencePercent >= 0 ? "+" : "-",
+      scale: Math.round(saleMonthData?.newUsers?.differencePercent || 0),
+      scaleType: saleMonthData?.newUsers?.differencePercent >= 0 ? "+" : "",
       backGroundColor: "#b2dfdb", // Xanh ngọc nhạt
     },
     {
@@ -70,8 +70,8 @@ const monthSaleData = [
       iconBackGroundColor: "#795548", // Nâu
       value: saleMonthData?.postRoomDifferencePercent?.totalPostRoomCurrent,
       label: "Đăng phòng",
-      scale: saleMonthData?.postRoomDifferencePercent?.differencePercent,
-      scaleType: saleMonthData?.postRoomDifferencePercent?.differencePercent >= 0 ? "+" : "-",
+      scale: Math.round(saleMonthData?.postRoomDifferencePercent?.differencePercent || 0),
+      scaleType: saleMonthData?.postRoomDifferencePercent?.differencePercent >= 0 ? "+" : "",
       backGroundColor: "#d7ccc8", // Nâu nhạt
     },
     {
@@ -79,11 +79,11 @@ const monthSaleData = [
       iconBackGroundColor: "#9c27b0", // Tím đậm
       value: saleMonthData?.lookingForRoomDifferencePercent?.totalLookingForRoomCurrent,
       label: "Tìm bạn ở chung",
-      scale: saleMonthData?.lookingForRoomDifferencePercent?.differencePercent,
-      scaleType: saleMonthData?.lookingForRoomDifferencePercent?.differencePercent >= 0 ? "+" : "-",
+      scale: Math.round(saleMonthData?.lookingForRoomDifferencePercent?.differencePercent || 0),
+      scaleType: saleMonthData?.lookingForRoomDifferencePercent?.differencePercent >= 0 ? "+" : "",
       backGroundColor: "#e1bee7", // Tím nhạt
     },
-];
+  ];
 
   const renderCard = (item, key, isMonthData) => {
     return (
