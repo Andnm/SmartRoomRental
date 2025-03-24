@@ -1,21 +1,125 @@
-// components/TopServices.js
+// components/TodaySalesSummary.js
 
 import { AiOutlineBarChart, AiFillTag } from "react-icons/ai";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { FaHome, FaUserFriends } from "react-icons/fa";
 import { PiExport } from "react-icons/pi";
 import { formatPrice } from "../../../utils/common";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import "dayjs/locale/vi";
 
-const TodaySalesSummary = ({ saleData, saleMonthData }) => {
+// Cấu hình plugin cho dayjs
+dayjs.extend(isBetween);
+dayjs.extend(isSameOrBefore);
+dayjs.locale("vi");
+
+const TodaySalesSummary = ({ saleData, saleMonthData, transactionData }) => {
+  const [transactionStats, setTransactionStats] = useState({
+    today: 0,
+    yesterday: 0,
+    thisMonth: 0,
+    lastMonth: 0,
+    todayPercentage: 0,
+    monthPercentage: 0
+  });
+
+  useEffect(() => {
+    if (transactionData && transactionData.length > 0) {
+      // Lấy thời gian hiện tại
+      const now = dayjs();
+      
+      // Tính toán ngày hôm nay, hôm qua, tháng này, tháng trước
+      const today = now.startOf('day');
+      const yesterday = today.subtract(1, 'day');
+      const endOfToday = today.endOf('day');
+      const endOfYesterday = yesterday.endOf('day');
+      
+      const thisMonth = now.startOf('month');
+      const lastMonth = thisMonth.subtract(1, 'month');
+      const endOfThisMonth = now.endOf('month');
+      const endOfLastMonth = lastMonth.endOf('month');
+      
+      // Đếm số giao dịch
+      let todayTransactions = 0;
+      let yesterdayTransactions = 0;
+      let thisMonthTransactions = 0;
+      let lastMonthTransactions = 0;
+      
+      // Tính tổng số tiền
+      let todayAmount = 0;
+      let yesterdayAmount = 0;
+      let thisMonthAmount = 0;
+      let lastMonthAmount = 0;
+      
+      transactionData.forEach(transaction => {
+        const transactionDate = dayjs(transaction.createdAt);
+        const amount = transaction.amount || 0;
+        
+        // Kiểm tra giao dịch thuộc ngày nào
+        if (transactionDate.isBetween(today, endOfToday, null, '[]')) {
+          todayTransactions++;
+          todayAmount += amount;
+        } else if (transactionDate.isBetween(yesterday, endOfYesterday, null, '[]')) {
+          yesterdayTransactions++;
+          yesterdayAmount += amount;
+        }
+        
+        // Kiểm tra giao dịch thuộc tháng nào
+        if (transactionDate.isBetween(thisMonth, endOfThisMonth, null, '[]')) {
+          thisMonthTransactions++;
+          thisMonthAmount += amount;
+        } else if (transactionDate.isBetween(lastMonth, endOfLastMonth, null, '[]')) {
+          lastMonthTransactions++;
+          lastMonthAmount += amount;
+        }
+      });
+      
+      // Tính phần trăm tăng/giảm
+      const calculatePercentage = (current, previous) => {
+        if (previous === 0) return current > 0 ? 100 : 0;
+        return ((current - previous) / previous) * 100;
+      };
+      
+      const todayPercentage = calculatePercentage(todayTransactions, yesterdayTransactions);
+      const monthPercentage = calculatePercentage(thisMonthTransactions, lastMonthTransactions);
+      
+      // Cập nhật state
+      setTransactionStats({
+        today: todayTransactions,
+        yesterday: yesterdayTransactions,
+        thisMonth: thisMonthTransactions,
+        lastMonth: lastMonthTransactions,
+        todayAmount,
+        yesterdayAmount,
+        thisMonthAmount,
+        lastMonthAmount,
+        todayPercentage,
+        monthPercentage
+      });
+    }
+  }, [transactionData]);
+
   const todaySaleData = [
     {
       icon: <AiOutlineBarChart size={24} color="white" />,
       iconBackGroundColor: "#fb597e", // Hồng đậm
-      value: `${formatPrice(saleData?.income?.totalIncomeCurrent)} VNĐ`,
+      value: `${formatPrice(transactionStats.todayAmount || saleData?.income?.totalIncomeCurrent)} VNĐ`,
       label: "Tổng doanh số",
-      scale: Math.round(saleData?.income?.differencePercent || 0),
-      scaleType: saleData?.income?.differencePercent >= 0 ? "+" : "",
+      scale: Math.round(transactionStats.todayAmount ? transactionStats.todayPercentage : (saleData?.income?.differencePercent || 0)),
+      scaleType: transactionStats.todayAmount ? (transactionStats.todayPercentage >= 0 ? "+" : "") : (saleData?.income?.differencePercent >= 0 ? "+" : ""),
       backGroundColor: "#ffe2e6", // Hồng nhạt
+    },
+    {
+      icon: <FaUserFriends size={24} color="white" />,
+      iconBackGroundColor: "#2196f3", // Xanh dương
+      value: transactionStats.today || saleData?.lookingForRoomDifferencePercent?.totalLookingForRoomCurrent,
+      label: "Số lượng giao dịch",
+      scale: Math.round(transactionStats.today ? transactionStats.todayPercentage : (saleData?.lookingForRoomDifferencePercent?.differencePercent || 0)),
+      scaleType: transactionStats.today ? (transactionStats.todayPercentage >= 0 ? "+" : "") : (saleData?.lookingForRoomDifferencePercent?.differencePercent >= 0 ? "+" : ""),
+      backGroundColor: "#cce7ff", // Xanh dương nhạt
     },
     {
       icon: <BsFillPersonPlusFill size={24} color="white" />,
@@ -35,26 +139,26 @@ const TodaySalesSummary = ({ saleData, saleMonthData }) => {
       scaleType: saleData?.postRoomDifferencePercent?.differencePercent >= 0 ? "+" : "",
       backGroundColor: "#d0f0c0", // Xanh lá nhạt
     },
-    {
-      icon: <FaUserFriends size={24} color="white" />,
-      iconBackGroundColor: "#2196f3", // Xanh dương
-      value: saleData?.lookingForRoomDifferencePercent?.totalLookingForRoomCurrent,
-      label: "Tìm bạn ở chung",
-      scale: Math.round(saleData?.lookingForRoomDifferencePercent?.differencePercent || 0),
-      scaleType: saleData?.lookingForRoomDifferencePercent?.differencePercent >= 0 ? "+" : "",
-      backGroundColor: "#cce7ff", // Xanh dương nhạt
-    },
   ];
 
   const monthSaleData = [
     {
       icon: <AiOutlineBarChart size={24} color="white" />,
       iconBackGroundColor: "#ffa726", // Cam đậm
-      value: `${formatPrice(saleMonthData?.income?.totalIncomeCurrent)} VNĐ`,
+      value: `${formatPrice(transactionStats.thisMonthAmount || saleMonthData?.income?.totalIncomeCurrent)} VNĐ`,
       label: "Tổng doanh số",
-      scale: Math.round(saleMonthData?.income?.differencePercent || 0),
-      scaleType: saleMonthData?.income?.differencePercent >= 0 ? "+" : "",
+      scale: Math.round(transactionStats.thisMonthAmount ? transactionStats.monthPercentage : (saleMonthData?.income?.differencePercent || 0)),
+      scaleType: transactionStats.thisMonthAmount ? (transactionStats.monthPercentage >= 0 ? "+" : "") : (saleMonthData?.income?.differencePercent >= 0 ? "+" : ""),
       backGroundColor: "#ffe0b2", // Cam nhạt
+    },
+    {
+      icon: <FaUserFriends size={24} color="white" />,
+      iconBackGroundColor: "#9c27b0", // Tím đậm
+      value: transactionStats.thisMonth || saleMonthData?.lookingForRoomDifferencePercent?.totalLookingForRoomCurrent,
+      label: "Số lượng giao dịch",
+      scale: Math.round(transactionStats.thisMonth ? transactionStats.monthPercentage : (saleMonthData?.lookingForRoomDifferencePercent?.differencePercent || 0)),
+      scaleType: transactionStats.thisMonth ? (transactionStats.monthPercentage >= 0 ? "+" : "") : (saleMonthData?.lookingForRoomDifferencePercent?.differencePercent >= 0 ? "+" : ""),
+      backGroundColor: "#e1bee7", // Tím nhạt
     },
     {
       icon: <BsFillPersonPlusFill size={24} color="white" />,
@@ -73,15 +177,6 @@ const TodaySalesSummary = ({ saleData, saleMonthData }) => {
       scale: Math.round(saleMonthData?.postRoomDifferencePercent?.differencePercent || 0),
       scaleType: saleMonthData?.postRoomDifferencePercent?.differencePercent >= 0 ? "+" : "",
       backGroundColor: "#d7ccc8", // Nâu nhạt
-    },
-    {
-      icon: <FaUserFriends size={24} color="white" />,
-      iconBackGroundColor: "#9c27b0", // Tím đậm
-      value: saleMonthData?.lookingForRoomDifferencePercent?.totalLookingForRoomCurrent,
-      label: "Tìm bạn ở chung",
-      scale: Math.round(saleMonthData?.lookingForRoomDifferencePercent?.differencePercent || 0),
-      scaleType: saleMonthData?.lookingForRoomDifferencePercent?.differencePercent >= 0 ? "+" : "",
-      backGroundColor: "#e1bee7", // Tím nhạt
     },
   ];
 
@@ -102,7 +197,7 @@ const TodaySalesSummary = ({ saleData, saleMonthData }) => {
         <div className="summary_card_label">{item.label}</div>
         <div className="summary_card_scale">
           {item.scaleType}
-          {item.scale}% {isMonthData ? "so với tháng trước" : "so với hôm qua"}
+          {Math.abs(item.scale).toFixed(0)}% {isMonthData ? "so với tháng trước" : "so với hôm qua"}
         </div>
       </div>
     );

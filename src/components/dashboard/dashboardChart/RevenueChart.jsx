@@ -19,7 +19,7 @@ const RevenueChart = ({ totalAmount }) => {
     ],
     datasets: [
       {
-        label: "Gói nâng hội viên",
+        label: "Doanh thu theo tháng",
         data: totalAmount,
         backgroundColor: "#0096fe",
         maxBarThickness: 15,
@@ -37,7 +37,7 @@ const RevenueChart = ({ totalAmount }) => {
         plugins: {
           title: {
             display: true,
-            text: "Tổng doanh thu",
+            text: "Tổng doanh thu theo tháng",
             color: "#333", // Title color
             align: "start",
             font: {

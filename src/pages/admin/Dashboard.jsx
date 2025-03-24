@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
 import { getAllTransactionByAdmin } from "../../services/transaction.services";
+import WeeklyRevenueChart from "../../components/dashboard/dashboardChart/WeeklyRevenueChart";
 
 ChartJS.register(...registerables);
 
@@ -42,9 +43,12 @@ const Dashboard = () => {
           const responseTransaction = await getAllTransactionByAdmin();
 
           setSaleData(responseSale);
+          console.log("responseSale: ", responseSale)
           setSaleMonthData(responseSaleMonth)
           setMonthlyData(responseMonthly);
+          console.log("responseMonthly: ", responseMonthly)
           setTransactionData(responseTransaction)
+          console.log("responseTransaction: ", responseTransaction)
 
         } catch (error) {
           // toast.error("There was an error loading data!");
@@ -66,41 +70,32 @@ const Dashboard = () => {
           <Spin spinning={isLoading} />
         </div>
       ) : (
-        <div className="dashboard">
-          {saleData && monthlyData && (
-            <>
-              {/* <div className="grid grid-flow-col grid-rows-2 grid-cols-3 gap-8"> */}
-              <div className="today_sales_summary dashboard_boxshadow">
-                <TodaySalesSummary saleData={saleData} saleMonthData={saleMonthData} />
-              </div>
-              <div className="visitors_Chart dashboard_boxshadow top_services">
-                <VisitorsChart
-                  countUsers={monthlyData.countUsers}
-                  countTransactions={monthlyData.countTransactions}
-                  transactionData={transactionData}
-                />
-              </div>
-              <div className="revenue_chart dashboard_boxshadow">
-                <RevenueChart totalAmount={monthlyData.totalAmount} />
-              </div>
-              {/* <div className="satisfaction_chart dashboard_boxshadow">
-                <SatisfactionChart />
-              </div> */}
-              {/* <div className="goals_chart dashboard_boxshadow">
-                <GoalsChart />
-              </div> */}
-              {/* <div className="top_services dashboard_boxshadow">
-                <TopServices />
-              </div> */}
-              {/* <div className="world_map dashboard_boxshadow">
-                <WorldMap />
-              </div>
-              <div className="volume_service_level dashboard_boxshadow">
-                <VolumeServiceLevel />
-              </div> */}
-            </>
-          )}
-        </div>
+        <>
+          <div className="dashboard">
+            {saleData && monthlyData && (
+              <>
+                {/* <div className="grid grid-flow-col grid-rows-2 grid-cols-3 gap-8"> */}
+                <div className="today_sales_summary dashboard_boxshadow">
+                  <TodaySalesSummary saleData={saleData} saleMonthData={saleMonthData} transactionData={transactionData}/>
+                </div>
+                <div className="visitors_Chart dashboard_boxshadow top_services">
+                  <VisitorsChart
+                    countUsers={monthlyData.countUsers}
+                    countTransactions={monthlyData.countTransactions}
+                    transactionData={transactionData}
+                  />
+                </div>
+                {/* <div className="revenue_chart dashboard_boxshadow">
+                  <RevenueChart totalAmount={monthlyData.totalAmount} />
+                </div> */}
+              </>
+            )}
+          </div>
+
+          <div className="weekly-revenue-chart dashboard_boxshadow shadow-md">
+            <WeeklyRevenueChart transactionData={transactionData} />
+          </div>
+        </>
       )}
     </>
   );
