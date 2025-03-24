@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import { Spin } from "antd";
 import { getAllTransactionByAdmin } from "../../services/transaction.services";
 import WeeklyRevenueChart from "../../components/dashboard/dashboardChart/WeeklyRevenueChart";
+import { getAllRoomsByAdmin } from "../../services/room.services";
 
 ChartJS.register(...registerables);
 
@@ -30,6 +31,7 @@ const Dashboard = () => {
   const [saleMonthData, setSaleMonthData] = useState(null);
   const [monthlyData, setMonthlyData] = useState(null);
   const [transactionData, setTransactionData] = useState(null);
+  const [roomData, setRoomData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -41,14 +43,13 @@ const Dashboard = () => {
           const responseSaleMonth = await getStatisticSaleMonth();
           const responseMonthly = await getStatisticMonthly(2025);
           const responseTransaction = await getAllTransactionByAdmin();
+          const responseGetAllRooms = await getAllRoomsByAdmin();
 
           setSaleData(responseSale);
-          console.log("responseSale: ", responseSale)
           setSaleMonthData(responseSaleMonth)
           setMonthlyData(responseMonthly);
-          console.log("responseMonthly: ", responseMonthly)
           setTransactionData(responseTransaction)
-          console.log("responseTransaction: ", responseTransaction)
+          setRoomData(responseGetAllRooms)
 
         } catch (error) {
           // toast.error("There was an error loading data!");
@@ -76,7 +77,7 @@ const Dashboard = () => {
               <>
                 {/* <div className="grid grid-flow-col grid-rows-2 grid-cols-3 gap-8"> */}
                 <div className="today_sales_summary dashboard_boxshadow">
-                  <TodaySalesSummary saleData={saleData} saleMonthData={saleMonthData} transactionData={transactionData}/>
+                  <TodaySalesSummary saleData={saleData} saleMonthData={saleMonthData} transactionData={transactionData} roomData={roomData}/>
                 </div>
                 <div className="visitors_Chart dashboard_boxshadow top_services">
                   <VisitorsChart

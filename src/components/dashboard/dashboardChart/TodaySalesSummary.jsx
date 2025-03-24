@@ -16,7 +16,7 @@ dayjs.extend(isBetween);
 dayjs.extend(isSameOrBefore);
 dayjs.locale("vi");
 
-const TodaySalesSummary = ({ saleData, saleMonthData, transactionData }) => {
+const TodaySalesSummary = ({ saleData, saleMonthData, transactionData, roomData }) => {
   const [transactionStats, setTransactionStats] = useState({
     today: 0,
     yesterday: 0,
@@ -26,38 +26,57 @@ const TodaySalesSummary = ({ saleData, saleMonthData, transactionData }) => {
     monthPercentage: 0
   });
 
+  const [stats, setStats] = useState({
+    totalTransactions: 0,
+    totalActiveRooms: 0
+  });
+
+  useEffect(() => {
+    // Tính tổng số giao dịch
+    const totalTransactions = transactionData ? transactionData.length : 0;
+
+    // Tính tổng số phòng có status là active
+    const totalActiveRooms = roomData ?
+      roomData.filter(room => room.status === 'active').length : 0;
+
+    setStats({
+      totalTransactions,
+      totalActiveRooms
+    });
+  }, [transactionData, roomData]);
+
   useEffect(() => {
     if (transactionData && transactionData.length > 0) {
       // Lấy thời gian hiện tại
       const now = dayjs();
-      
+
       // Tính toán ngày hôm nay, hôm qua, tháng này, tháng trước
       const today = now.startOf('day');
       const yesterday = today.subtract(1, 'day');
       const endOfToday = today.endOf('day');
       const endOfYesterday = yesterday.endOf('day');
-      
+
       const thisMonth = now.startOf('month');
       const lastMonth = thisMonth.subtract(1, 'month');
       const endOfThisMonth = now.endOf('month');
       const endOfLastMonth = lastMonth.endOf('month');
-      
+
       // Đếm số giao dịch
       let todayTransactions = 0;
       let yesterdayTransactions = 0;
       let thisMonthTransactions = 0;
       let lastMonthTransactions = 0;
-      
+
       // Tính tổng số tiền
       let todayAmount = 0;
       let yesterdayAmount = 0;
       let thisMonthAmount = 0;
       let lastMonthAmount = 0;
-      
+
       transactionData.forEach(transaction => {
         const transactionDate = dayjs(transaction.createdAt);
         const amount = transaction.amount || 0;
-        
+
         // Kiểm tra giao dịch thuộc ngày nào
         if (transactionDate.isBetween(today, endOfToday, null, '[]')) {
           todayTransactions++;
@@ -66,7 +85,7 @@ const TodaySalesSummary = ({ saleData, saleMonthData, transactionData }) => {
           yesterdayTransactions++;
           yesterdayAmount += amount;
         }
-        
+
         // Kiểm tra giao dịch thuộc tháng nào
         if (transactionDate.isBetween(thisMonth, endOfThisMonth, null, '[]')) {
           thisMonthTransactions++;
@@ -76,16 +95,16 @@ const TodaySalesSummary = ({ saleData, saleMonthData, transactionData }) => {
           lastMonthAmount += amount;
         }
       });
-      
+
       // Tính phần trăm tăng/giảm
       const calculatePercentage = (current, previous) => {
         if (previous === 0) return current > 0 ? 100 : 0;
         return ((current - previous) / previous) * 100;
       };
-      
+
       const todayPercentage = calculatePercentage(todayTransactions, yesterdayTransactions);
       const monthPercentage = calculatePercentage(thisMonthTransactions, lastMonthTransactions);
-      
+
       // Cập nhật state
       setTransactionStats({
         today: todayTransactions,
@@ -180,6 +199,23 @@ const TodaySalesSummary = ({ saleData, saleMonthData, transactionData }) => {
     },
   ];
 
+  const summaryData = [
+    {
+      icon: <FaUserFriends size={24} color="white" />,
+      iconBackgroundColor: "#2196f3", // Xanh dương
+      value: stats.totalTransactions,
+      label: "Tổng số giao dịch",
+      backgroundColor: "#cce7ff", // Xanh dương nhạt
+    },
+    {
+      icon: <FaHome size={24} color="white" />,
+      iconBackgroundColor: "#4caf50", // Xanh lá
+      value: stats.totalActiveRooms,
+      label: "Tổng số phòng đang được đăng",
+      backgroundColor: "#d0f0c0", // Xanh lá nhạt
+    }
+  ];
+
   const renderCard = (item, key, isMonthData) => {
     return (
       <div
@@ -212,7 +248,30 @@ const TodaySalesSummary = ({ saleData, saleMonthData, transactionData }) => {
           Xuất
         </button>
       </div>
-      <h1 className="text-lg font-bold">Hôm nay</h1>
+      <h1 className="text-lg font-bold">Tổng quan</h1>
+      <div className="grid grid-cols-2 gap-4">
+        {summaryData.map((item, index) => (
+          <div
+            key={index}
+            className="p-4 rounded-lg shadow-sm"
+            style={{ backgroundColor: item.backgroundColor }}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <div className="text-2xl font-bold">{item.value}</div>
+                <div className="text-gray-700">{item.label}</div>
+              </div>
+              <div
+                className="flex items-center justify-center rounded-full w-12 h-12"
+                style={{ backgroundColor: item.iconBackgroundColor }}
+              >
+                {item.icon}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <h1 className="text-lg font-bold mt-4">Hôm nay</h1>
       <div className="summary_item_container">
         {todaySaleData.map((item, key) => renderCard(item, key, false))}
       </div>
